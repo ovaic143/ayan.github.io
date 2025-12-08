@@ -2,267 +2,686 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Ayan | Portfolio</title>
+  <title>Ayan | Welcome to My World</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
-    /* ----- RESET ----- */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    :root {
+      --bg1: #050816;
+      --bg2: #020617;
+      --accent1: #22d3ee;
+      --accent2: #6366f1;
+      --accent3: #f97316;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+    }
+
     body {
       min-height: 100vh;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #1e293b 0, #020617 45%, #000 100%);
+      color: var(--text-main);
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #53354a);
-      background-size: 300% 300%;
-      animation: bg-move 15s ease infinite;
-      color: #f9fafb;
+      overflow: hidden;
     }
 
-    @keyframes bg-move {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    /* Animated background grid */
+    .grid {
+      position: fixed;
+      inset: 0;
+      background-image: linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      transform: translate3d(0, 0, 0);
+      animation: grid-move 18s linear infinite;
+      pointer-events: none;
+      z-index: -2;
     }
 
-    /* ----- CARD ----- */
-    .card {
-      width: min(420px, 92vw);
-      padding: 2.5rem 2.25rem;
-      border-radius: 24px;
-      background: rgba(15, 23, 42, 0.9);
+    @keyframes grid-move {
+      0%   { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-40px, -40px, 0); }
+    }
+
+    /* Glow orbs */
+    .orb {
+      position: fixed;
+      width: 320px;
+      height: 320px;
+      border-radius: 999px;
+      filter: blur(50px);
+      opacity: 0.7;
+      z-index: -1;
+    }
+
+    .orb--blue {
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.8), transparent 60%);
+      top: -60px;
+      left: -40px;
+      animation: float-orb 9s ease-in-out infinite alternate;
+    }
+
+    .orb--purple {
+      background: radial-gradient(circle, rgba(129, 140, 248, 0.9), transparent 60%);
+      bottom: -120px;
+      right: -80px;
+      animation: float-orb 11s ease-in-out infinite alternate;
+    }
+
+    @keyframes float-orb {
+      0%   { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(40px, -30px, 0); }
+    }
+
+    /* Main layout */
+    .shell {
+      width: min(980px, 94vw);
+      border-radius: 28px;
+      border: 1px solid rgba(148, 163, 184, 0.26);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.9))
+                  border-box;
       box-shadow:
-        0 20px 40px rgba(0, 0, 0, 0.45),
-        0 0 0 1px rgba(148, 163, 184, 0.15);
-      backdrop-filter: blur(18px);
-      text-align: center;
+        0 24px 80px rgba(0, 0, 0, 0.85),
+        0 0 0 1px rgba(15, 23, 42, 0.9);
+      padding: 1.4rem 1.6rem;
+      backdrop-filter: blur(26px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.1fr);
+      gap: 1.4rem;
       position: relative;
       overflow: hidden;
-      animation: card-pop 0.8s ease-out forwards;
       transform: translateY(24px);
       opacity: 0;
+      animation: card-in 0.9s ease-out forwards;
     }
 
-    @keyframes card-pop {
+    @keyframes card-in {
       to {
         transform: translateY(0);
         opacity: 1;
       }
     }
 
-    .glow-orb {
+    .shell::before {
+      content: "";
       position: absolute;
-      width: 190px;
-      height: 190px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, #ff9a9e, transparent 55%);
-      opacity: 0.35;
-      top: -60px;
-      right: -60px;
-      filter: blur(2px);
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid transparent;
+      background: linear-gradient(130deg, rgba(56, 189, 248, 0.4), rgba(129, 140, 248, 0.1), rgba(249, 115, 22, 0.4)) border-box;
+      mix-blend-mode: screen;
+      opacity: 0.25;
       pointer-events: none;
     }
 
-    .name {
-      font-size: 2.6rem;
+    /* Left column: avatar + welcome text */
+    .left {
+      position: relative;
+      padding: 1.6rem 1.3rem 1.3rem;
+      border-radius: 22px;
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.9));
+      box-shadow: inset 0 0 0 1px rgba(30, 64, 175, 0.6);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(15, 118, 110, 0.16);
+      border: 1px solid rgba(45, 212, 191, 0.35);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #a5f3fc;
+      margin-bottom: 0.9rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.3);
+      animation: ping 1.6s ease-out infinite;
+    }
+
+    @keyframes ping {
+      0%   { transform: scale(1); opacity: 1; }
+      80%  { transform: scale(1.8); opacity: 0; }
+      100% { transform: scale(1.8); opacity: 0; }
+    }
+
+    .heading-main {
+      font-size: clamp(1.9rem, 2.4vw + 1rem, 2.4rem);
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 0.2rem;
-      background: linear-gradient(120deg, #f97316, #facc15, #22c55e, #38bdf8);
+      margin-bottom: 0.3rem;
+      background: linear-gradient(120deg, #e5e7eb, #38bdf8, #a855f7, #f97316);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
-      animation: float 4s ease-in-out infinite;
     }
 
-    .tagline {
-      font-size: 0.95rem;
-      letter-spacing: 0.14em;
+    .sub {
+      font-size: 0.96rem;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: #e5e7eb;
-      opacity: 0.7;
-      margin-bottom: 1.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1.2rem;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50%      { transform: translateY(-6px); }
-    }
-
-    .line {
-      width: 60px;
-      height: 2px;
-      border-radius: 999px;
-      margin: 0 auto 1.5rem;
-      background: linear-gradient(90deg, #f97316, #ec4899, #6366f1);
-      animation: pulse 2.3s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scaleX(1); opacity: 0.7; }
-      50%      { transform: scaleX(1.3); opacity: 1; }
-    }
-
-    .description {
+    .typewriter {
       font-size: 0.98rem;
       line-height: 1.6;
-      color: #cbd5f5;
-      margin-bottom: 2.1rem;
+      color: #d1d5db;
+      min-height: 3.1em;
+      position: relative;
+      padding-right: 0.6rem;
     }
 
-    /* ----- INSTAGRAM BUTTON ----- */
-    .social-wrap {
+    .typewriter::after {
+      content: "";
+      position: absolute;
+      width: 2px;
+      background: #e5e7eb;
+      top: 0.15em;
+      bottom: 0.15em;
+      right: 0;
+      animation: caret 0.9s steps(1) infinite;
+    }
+
+    @keyframes caret {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
+    .divider {
+      margin: 1.4rem 0 1rem;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.7), transparent);
+    }
+
+    .mini-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .prompt {
+      font-size: 0.9rem;
+      color: #e5e7eb;
+    }
+
+    /* Photo + glow ring */
+    .avatar-wrap {
+      position: absolute;
+      right: 1rem;
+      bottom: 1.2rem;
       display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .avatar-ring {
+      width: 86px;
+      height: 86px;
+      border-radius: 999px;
+      background: conic-gradient(from 180deg, #22d3ee, #6366f1, #f97316, #22d3ee);
+      padding: 2px;
+      animation: spin 10s linear infinite;
+    }
+
+    .avatar-ring-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      background: radial-gradient(circle at 30% 10%, #1e293b, #020617);
+      display: flex;
+      align-items: center;
       justify-content: center;
+      overflow: hidden;
+    }
+
+    .avatar {
+      width: 86%;
+      height: 86%;
+      border-radius: 999px;
+      object-fit: cover;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+    }
+
+    .avatar-note {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      max-width: 150px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Right column: interactive contact selector */
+    .right {
+      position: relative;
+      padding: 1.5rem 1.4rem 1.4rem;
+      border-radius: 22px;
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.9));
+      box-shadow: inset 0 0 0 1px rgba(30, 64, 175, 0.7);
+      display: flex;
+      flex-direction: column;
       gap: 1rem;
     }
 
-    .insta-btn {
+    .choices-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .chip {
+      position: relative;
       display: inline-flex;
       align-items: center;
-      gap: 0.7rem;
-      padding: 0.8rem 1.5rem;
+      gap: 0.45rem;
+      padding: 0.55rem 0.9rem;
       border-radius: 999px;
-      border: 1px solid rgba(248, 250, 252, 0.18);
-      text-decoration: none;
-      color: #f9fafb;
-      font-size: 0.95rem;
-      font-weight: 600;
+      font-size: 0.83rem;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      background: radial-gradient(
-        circle at 0 0,
-        rgba(251, 113, 133, 0.65),
-        rgba(59, 130, 246, 0.1)
-      );
-      box-shadow:
-        0 10px 25px rgba(15, 23, 42, 0.8),
-        0 0 0 1px rgba(248, 250, 252, 0.08);
-      transform: translateY(0);
-      transition:
-        transform 0.18s ease-out,
-        box-shadow 0.18s ease-out,
-        border-color 0.18s ease-out,
-        background 0.18s ease-out;
+      letter-spacing: 0.14em;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: radial-gradient(circle at top left, rgba(30, 64, 175, 0.7), rgba(15, 23, 42, 0.9));
+      color: #e5e7eb;
+      cursor: pointer;
+      transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, border-color 0.15s ease-out, background 0.15s ease-out;
     }
 
-    .insta-btn:hover {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow:
-        0 16px 35px rgba(15, 23, 42, 0.9),
-        0 0 30px rgba(249, 115, 22, 0.55);
-      border-color: rgba(251, 191, 36, 0.8);
-      background: radial-gradient(
-        circle at 0 0,
-        rgba(251, 113, 133, 0.9),
-        rgba(96, 165, 250, 0.35)
-      );
-    }
-
-    .insta-icon {
-      width: 24px;
-      height: 24px;
-      flex-shrink: 0;
-    }
-
-    .insta-text-small {
-      font-size: 0.8rem;
-      opacity: 0.8;
+    .chip small {
+      font-size: 0.7rem;
       text-transform: none;
       letter-spacing: 0.05em;
+      color: #a5b4fc;
     }
 
-    /* ----- FOOTER ----- */
-    .footer {
-      margin-top: 2.4rem;
-      font-size: 0.75rem;
-      letter-spacing: 0.16em;
+    .chip-icon {
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+    }
+
+    .chip:hover {
+      transform: translateY(-2px);
+      border-color: rgba(56, 189, 248, 0.9);
+      box-shadow:
+        0 10px 22px rgba(15, 23, 42, 0.9),
+        0 0 20px rgba(56, 189, 248, 0.45);
+      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.85), rgba(15, 23, 42, 0.95));
+    }
+
+    .chip.active {
+      border-color: rgba(234, 179, 8, 0.9);
+      box-shadow:
+        0 10px 24px rgba(15, 23, 42, 0.9),
+        0 0 20px rgba(234, 179, 8, 0.6);
+      background: radial-gradient(circle at top left, rgba(234, 179, 8, 0.85), rgba(15, 23, 42, 0.95));
+    }
+
+    .answer-panel {
+      margin-top: 0.6rem;
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.96));
+      padding: 1rem 0.95rem;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 0.8rem;
+      align-items: center;
+      min-height: 80px;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+    }
+
+    .answer-panel.visible {
+      animation: slide-up 0.25s ease-out forwards;
+      pointer-events: auto;
+    }
+
+    @keyframes slide-up {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .answer-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.1), rgba(15, 23, 42, 1));
+      border: 1px solid rgba(56, 189, 248, 0.65);
+    }
+
+    .answer-content {
+      font-size: 0.95rem;
+      color: #e5e7eb;
+    }
+
+    .answer-label {
+      font-size: 0.72rem;
       text-transform: uppercase;
-      opacity: 0.5;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      margin-bottom: 0.2rem;
     }
 
-    /* ----- RESPONSIVE ----- */
+    .answer-main a {
+      color: #38bdf8;
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .answer-main a:hover {
+      text-decoration: underline;
+    }
+
+    .hint {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+    }
+
+    .footer {
+      margin-top: auto;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    @media (max-width: 840px) {
+      body {
+        padding: 1rem 0.3rem;
+        align-items: flex-start;
+      }
+      .shell {
+        margin-top: 1.2rem;
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .avatar-wrap {
+        position: static;
+        margin-top: 1.1rem;
+      }
+      .left {
+        padding-bottom: 1.4rem;
+      }
+    }
+
     @media (max-width: 480px) {
-      .card {
-        padding: 2rem 1.7rem;
+      .left, .right {
+        padding: 1.2rem 1rem 1.1rem;
       }
-      .name {
-        font-size: 2.1rem;
+      .avatar-ring {
+        width: 70px;
+        height: 70px;
       }
-      .description {
-        font-size: 0.9rem;
-      }
-      .insta-btn {
-        padding-inline: 1.2rem;
-      }
-      .footer {
-        font-size: 0.7rem;
+      .avatar-note {
+        display: none;
       }
     }
   </style>
 </head>
 <body>
-  <main class="card">
-    <div class="glow-orb"></div>
+  <div class="grid"></div>
+  <div class="orb orb--blue"></div>
+  <div class="orb orb--purple"></div>
 
-    <h1 class="name">Ayan</h1>
-    <p class="tagline">Digital Vibes • Tech • Life</p>
-    <div class="line"></div>
+  <main class="shell">
+    <!-- LEFT: welcome + intro -->
+    <section class="left">
+      <div class="status-pill">
+        <span class="status-dot"></span>
+        <span>Welcome Online</span>
+      </div>
 
-    <p class="description">
-      Welcome to my little corner of the internet. I love exploring tech,
-      the web, and new ideas every day.  
-      Tap the button below to connect with me on Instagram.
-    </p>
+      <h1 class="heading-main">Ayan</h1>
+      <p class="sub">Tech • Web • Digital Life</p>
 
-    <div class="social-wrap">
-      <a
-        class="insta-btn"
-        href="https://www.instagram.com/ayanovaic?igsh=bHFqNnZ2b3BjdDh6"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <!-- Pure SVG Instagram Icon -->
-        <svg
-          class="insta-icon"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
+      <p class="typewriter" id="typewriter"></p>
+
+      <div class="divider"></div>
+
+      <p class="mini-label">Start here</p>
+      <p class="prompt">
+        👋 Welcome to my website. Here you will find all my important details.
+        On the right, choose what you want to see — contact number, email, Instagram, or Facebook.
+      </p>
+
+      <div class="avatar-wrap">
+        <div class="avatar-ring">
+          <div class="avatar-ring-inner">
+            <!--
+              🔽 IMPORTANT:
+              Replace "my-photo.jpg" with the actual name of your photo file (e.g. ayan.jpg)
+              and add that image file to your GitHub repo.
+            -->
+            <img src="my-photo.jpg" alt="Photo of Ayan" class="avatar" />
+          </div>
+        </div>
+        <p class="avatar-note">
+          That’s me — Ayan.  
+          Tech enthusiast, always exploring something new.
+        </p>
+      </div>
+    </section>
+
+    <!-- RIGHT: interactive contact selector -->
+    <section class="right">
+      <div>
+        <p class="mini-label">What do you want?</p>
+        <p class="prompt">
+          Tap a button below and I’ll show you exactly what you asked for.
+        </p>
+      </div>
+
+      <div class="choices-row">
+        <!-- Contact number -->
+        <button class="chip" data-type="phone">
+          <span class="chip-icon">
+            <!-- Phone icon -->
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M7.2 4.2 9.6 3a1 1 0 0 1 1.3.5l1.2 2.7a1 1 0 0 1-.2 1.1l-1 1a9.6 9.6 0 0 0 4.4 4.4l1-1a1 1 0 0 1 1.1-.2l2.7 1.2a1 1 0 0 1 .5 1.3l-1.2 2.4A2.2 2.2 0 0 1 18.3 18 13.5 13.5 0 0 1 6 5.7c0-.8.5-1.5 1.2-1.9Z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+          Phone
+        </button>
+
+        <!-- Email -->
+        <button class="chip" data-type="email">
+          <span class="chip-icon">
+            <!-- Email icon -->
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M4 6.75A2.75 2.75 0 0 1 6.75 4h10.5A2.75 2.75 0 0 1 20 6.75v10.5A2.75 2.75 0 0 1 17.25 20H6.75A2.75 2.75 0 0 1 4 17.25Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+              <path
+                d="m6.5 8 5.1 3.4a1.5 1.5 0 0 0 1.8 0L18.5 8"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
+            </svg>
+          </span>
+          Email
+        </button>
+
+        <!-- Instagram -->
+        <button class="chip" data-type="instagram">
+          <span class="chip-icon">
+            <!-- Instagram icon -->
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <defs>
+                <linearGradient id="ig-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#f97316" />
+                  <stop offset="40%" stop-color="#ec4899" />
+                  <stop offset="100%" stop-color="#6366f1" />
+                </linearGradient>
+              </defs>
+              <rect x="2" y="2" width="20" height="20" rx="6" fill="url(#ig-grad)" />
+              <circle cx="12" cy="12" r="4" fill="none" stroke="#f9fafb" stroke-width="1.6" />
+              <circle cx="17" cy="7" r="1.1" fill="#f9fafb" />
+            </svg>
+          </span>
+          Instagram
+        </button>
+
+        <!-- Facebook -->
+        <button class="chip" data-type="facebook">
+          <span class="chip-icon">
+            <!-- Facebook icon -->
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" fill="#1d4ed8" />
+              <path
+                d="M13 19v-5h2.1l.4-3H13V9.1c0-.9.3-1.5 1.6-1.5H15.6V5.1C15.3 5 14.4 5 13.5 5 11.1 5 9.5 6.4 9.5 8.9V11H7.5v3H9.5v5Z"
+                fill="#e5e7eb"
+              />
+            </svg>
+          </span>
+          Facebook
+        </button>
+      </div>
+
+      <div id="answer-panel" class="answer-panel">
+        <div class="answer-icon" id="answer-icon">
+          <!-- icon injected by JS -->
+        </div>
+        <div class="answer-content">
+          <div class="answer-label" id="answer-label"></div>
+          <div class="answer-main" id="answer-main"></div>
+          <p class="hint" id="answer-hint"></p>
+        </div>
+      </div>
+
+      <p class="footer">
+        Made with 💻 &amp; ⚡ by Ayan
+      </p>
+    </section>
+  </main>
+
+  <script>
+    // Typewriter effect for welcome message
+    const typewriterEl = document.getElementById("typewriter");
+    const text = "Welcome to my website! Here you will find all my details — from how to contact me to where I am active on social media. Take a look around and tap what you need.";
+    let index = 0;
+
+    function typeLoop() {
+      if (index <= text.length) {
+        typewriterEl.textContent = text.slice(0, index);
+        index++;
+        setTimeout(typeLoop, 25);
+      }
+    }
+    typeLoop();
+
+    // Contact selector logic
+    const chips = document.querySelectorAll(".chip");
+    const panel = document.getElementById("answer-panel");
+    const labelEl = document.getElementById("answer-label");
+    const mainEl = document.getElementById("answer-main");
+    const hintEl = document.getElementById("answer-hint");
+    const iconEl = document.getElementById("answer-icon");
+
+    const icons = {
+      phone: `
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M7.2 4.2 9.6 3a1 1 0 0 1 1.3.5l1.2 2.7a1 1 0 0 1-.2 1.1l-1 1a9.6 9.6 0 0 0 4.4 4.4l1-1a1 1 0 0 1 1.1-.2l2.7 1.2a1 1 0 0 1 .5 1.3l-1.2 2.4A2.2 2.2 0 0 1 18.3 18 13.5 13.5 0 0 1 6 5.7c0-.8.5-1.5 1.2-1.9Z"
+            fill="currentColor"
+          />
+        </svg>
+      `,
+      email: `
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M4 6.75A2.75 2.75 0 0 1 6.75 4h10.5A2.75 2.75 0 0 1 20 6.75v10.5A2.75 2.75 0 0 1 17.25 20H6.75A2.75 2.75 0 0 1 4 17.25Z"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          />
+          <path
+            d="m6.5 8 5.1 3.4a1.5 1.5 0 0 0 1.8 0L18.5 8"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          />
+        </svg>
+      `,
+      instagram: `
+        <svg viewBox="0 0 24 24" aria-hidden="true">
           <defs>
-            <linearGradient id="instaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient id="ig-grad2" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#f97316" />
               <stop offset="40%" stop-color="#ec4899" />
               <stop offset="100%" stop-color="#6366f1" />
             </linearGradient>
           </defs>
-          <rect
-            x="2"
-            y="2"
-            width="20"
-            height="20"
-            rx="6"
-            fill="url(#instaGrad)"
-          />
-          <circle cx="12" cy="12" r="4.2" fill="none" stroke="#f9fafb" stroke-width="1.6" />
+          <rect x="2" y="2" width="20" height="20" rx="6" fill="url(#ig-grad2)" />
+          <circle cx="12" cy="12" r="4" fill="none" stroke="#f9fafb" stroke-width="1.6" />
           <circle cx="17" cy="7" r="1.1" fill="#f9fafb" />
         </svg>
+      `,
+      facebook: `
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5" fill="#1d4ed8" />
+          <path
+            d="M13 19v-5h2.1l.4-3H13V9.1c0-.9.3-1.5 1.6-1.5H15.6V5.1C15.3 5 14.4 5 13.5 5 11.1 5 9.5 6.4 9.5 8.9V11H7.5v3H9.5v5Z"
+            fill="#e5e7eb"
+          />
+        </svg>
+      `
+    };
 
-        <span>
-          Instagram<br />
-          <span class="insta-text-small">@ayanovaic</span>
-        </span>
-      </a>
-    </div>
+    function setAnswer(type) {
+      panel.classList.remove("visible");
+      void panel.offsetWidth; // restart animation
 
-    <p class="footer">Made with 💻 &amp; ✨ by Ayan</p>
-  </main>
-</body>
-</html>
+      chips.forEach(c => c.classList.remove("active"));
+      const activeChip = document.querySelector('.chip[data-type="' + type + '"]');
+      if (activeChip) activeChip.classList.add("active");
+
+      if (type === "phone") {
+        labelEl.textContent = "Contact number";
+        mainEl.innerHTML = "+91 6262591914";
+        hintEl.textContent = "You can call or WhatsApp me on this number.";
+      } else if (type === "email") {
+        labelEl.textContent = "Email address";
+        mainEl.innerHTML = '<a href="mailto:ayanovaic@gmail.com">ayanovaic@gmail.com</a>';
+        hintEl.textContent = "Click to send me an email directly.";
+      } else if (type === "instagram") {
+        labelEl.textContent = "Instagram profile";
+        mainEl.innerHTML =
+          '<a href="https://www.instagram.com/ayanovaic?igsh=bHFqNnZ2b3BjdDh6" target="_blank" rel="noopener noreferrer">@ayanovaic</a>';
+        hintEl.textContent = "Tap to open my Instagram profile in a new tab.";
+      } else if (type === "f
