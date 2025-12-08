@@ -1,687 +1,353 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Ayan | Welcome to My World</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayan | Tech Savvy Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --neon-blue: #00f3ff;
+            --deep-blue: #0044ff;
+            --bg-dark: #050505;
+            --glass: rgba(255, 255, 255, 0.05);
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+        }
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    :root {
-      --bg1: #050816;
-      --bg2: #020617;
-      --accent1: #22d3ee;
-      --accent2: #6366f1;
-      --accent3: #f97316;
-      --text-main: #e5e7eb;
-      --text-muted: #9ca3af;
-    }
+        body {
+            background-color: var(--bg-dark);
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
 
-    body {
-      min-height: 100vh;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top left, #1e293b 0, #020617 45%, #000 100%);
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
+        /* --- Live Spotlights Animation --- */
+        .spotlight {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: float 10s infinite alternate ease-in-out;
+        }
+        .spot-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--deep-blue);
+            top: -10%;
+            left: -10%;
+        }
+        .spot-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--neon-blue);
+            bottom: -10%;
+            right: -10%;
+            animation-delay: -5s;
+        }
 
-    /* Animated background grid */
-    .grid {
-      position: fixed;
-      inset: 0;
-      background-image: linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
-      background-size: 40px 40px;
-      transform: translate3d(0, 0, 0);
-      animation: grid-move 18s linear infinite;
-      pointer-events: none;
-      z-index: -2;
-    }
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
 
-    @keyframes grid-move {
-      0%   { transform: translate3d(0, 0, 0); }
-      100% { transform: translate3d(-40px, -40px, 0); }
-    }
+        /* --- Main Container --- */
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.1);
+            text-align: center;
+            margin: 20px 0;
+            animation: slideUp 1s ease-out;
+        }
 
-    /* Glow orbs */
-    .orb {
-      position: fixed;
-      width: 320px;
-      height: 320px;
-      border-radius: 999px;
-      filter: blur(50px);
-      opacity: 0.7;
-      z-index: -1;
-    }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    .orb--blue {
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.8), transparent 60%);
-      top: -60px;
-      left: -40px;
-      animation: float-orb 9s ease-in-out infinite alternate;
-    }
+        /* --- Profile Photo --- */
+        .profile-img-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+        }
 
-    .orb--purple {
-      background: radial-gradient(circle, rgba(129, 140, 248, 0.9), transparent 60%);
-      bottom: -120px;
-      right: -80px;
-      animation: float-orb 11s ease-in-out infinite alternate;
-    }
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid var(--neon-blue);
+            box-shadow: 0 0 20px var(--neon-blue);
+        }
 
-    @keyframes float-orb {
-      0%   { transform: translate3d(0, 0, 0); }
-      100% { transform: translate3d(40px, -30px, 0); }
-    }
+        /* --- Typography --- */
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--neon-blue);
+            margin-bottom: 10px;
+        }
 
-    /* Main layout */
-    .shell {
-      width: min(980px, 94vw);
-      border-radius: 28px;
-      border: 1px solid rgba(148, 163, 184, 0.26);
-      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.9))
-                  border-box;
-      box-shadow:
-        0 24px 80px rgba(0, 0, 0, 0.85),
-        0 0 0 1px rgba(15, 23, 42, 0.9);
-      padding: 1.4rem 1.6rem;
-      backdrop-filter: blur(26px);
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.1fr);
-      gap: 1.4rem;
-      position: relative;
-      overflow: hidden;
-      transform: translateY(24px);
-      opacity: 0;
-      animation: card-in 0.9s ease-out forwards;
-    }
+        .subtitle {
+            color: var(--neon-blue);
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
 
-    @keyframes card-in {
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
+        .summary {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 30px;
+            text-align: justify;
+            border-left: 2px solid var(--neon-blue);
+            padding-left: 15px;
+        }
 
-    .shell::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      border: 1px solid transparent;
-      background: linear-gradient(130deg, rgba(56, 189, 248, 0.4), rgba(129, 140, 248, 0.1), rgba(249, 115, 22, 0.4)) border-box;
-      mix-blend-mode: screen;
-      opacity: 0.25;
-      pointer-events: none;
-    }
+        /* --- Contact Info --- */
+        .contact-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
 
-    /* Left column: avatar + welcome text */
-    .left {
-      position: relative;
-      padding: 1.6rem 1.3rem 1.3rem;
-      border-radius: 22px;
-      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.9));
-      box-shadow: inset 0 0 0 1px rgba(30, 64, 175, 0.6);
-    }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            background: rgba(255,255,255,0.03);
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.3s;
+        }
+        .contact-item:hover {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+        }
+        .contact-item i { color: var(--neon-blue); }
 
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.2rem 0.7rem;
-      border-radius: 999px;
-      background: rgba(15, 118, 110, 0.16);
-      border: 1px solid rgba(45, 212, 191, 0.35);
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: #a5f3fc;
-      margin-bottom: 0.9rem;
-    }
+        /* --- Social Media --- */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
 
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #22c55e;
-      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.3);
-      animation: ping 1.6s ease-out infinite;
-    }
+        .social-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: 0.3s;
+            border: 1px solid transparent;
+        }
 
-    @keyframes ping {
-      0%   { transform: scale(1); opacity: 1; }
-      80%  { transform: scale(1.8); opacity: 0; }
-      100% { transform: scale(1.8); opacity: 0; }
-    }
+        .social-btn:hover {
+            background: var(--neon-blue);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px var(--neon-blue);
+            transform: translateY(-3px);
+        }
 
-    .heading-main {
-      font-size: clamp(1.9rem, 2.4vw + 1rem, 2.4rem);
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 0.3rem;
-      background: linear-gradient(120deg, #e5e7eb, #38bdf8, #a855f7, #f97316);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-    }
+        /* --- Chat Gate Section --- */
+        .chat-gate {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 10px;
+            border-top: 1px solid var(--neon-blue);
+        }
 
-    .sub {
-      font-size: 0.96rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 1.2rem;
-    }
+        .chat-gate h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
 
-    .typewriter {
-      font-size: 0.98rem;
-      line-height: 1.6;
-      color: #d1d5db;
-      min-height: 3.1em;
-      position: relative;
-      padding-right: 0.6rem;
-    }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
 
-    .typewriter::after {
-      content: "";
-      position: absolute;
-      width: 2px;
-      background: #e5e7eb;
-      top: 0.15em;
-      bottom: 0.15em;
-      right: 0;
-      animation: caret 0.9s steps(1) infinite;
-    }
+        input {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #555;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+            transition: 0.3s;
+        }
 
-    @keyframes caret {
-      0%, 49% { opacity: 1; }
-      50%, 100% { opacity: 0; }
-    }
+        input:focus {
+            border-bottom-color: var(--neon-blue);
+        }
 
-    .divider {
-      margin: 1.4rem 0 1rem;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.7), transparent);
-    }
+        .btn-glow {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            color: var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .mini-label {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--text-muted);
-      margin-bottom: 0.4rem;
-    }
+        .btn-glow:hover {
+            background: var(--neon-blue);
+            color: var(--bg-dark);
+            box-shadow: 0 0 20px var(--neon-blue);
+        }
 
-    .prompt {
-      font-size: 0.9rem;
-      color: #e5e7eb;
-    }
+        /* --- Resume Button --- */
+        .resume-section {
+            margin-top: 20px;
+        }
+        .btn-resume {
+            background: white;
+            color: black;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+        .btn-resume:hover {
+            transform: scale(1.05);
+        }
 
-    /* Photo + glow ring */
-    .avatar-wrap {
-      position: absolute;
-      right: 1rem;
-      bottom: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-    }
-
-    .avatar-ring {
-      width: 86px;
-      height: 86px;
-      border-radius: 999px;
-      background: conic-gradient(from 180deg, #22d3ee, #6366f1, #f97316, #22d3ee);
-      padding: 2px;
-      animation: spin 10s linear infinite;
-    }
-
-    .avatar-ring-inner {
-      width: 100%;
-      height: 100%;
-      border-radius: inherit;
-      background: radial-gradient(circle at 30% 10%, #1e293b, #020617);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .avatar {
-      width: 86%;
-      height: 86%;
-      border-radius: 999px;
-      object-fit: cover;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-    }
-
-    .avatar-note {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      max-width: 150px;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* Right column: interactive contact selector */
-    .right {
-      position: relative;
-      padding: 1.5rem 1.4rem 1.4rem;
-      border-radius: 22px;
-      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.9));
-      box-shadow: inset 0 0 0 1px rgba(30, 64, 175, 0.7);
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .choices-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-    }
-
-    .chip {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.55rem 0.9rem;
-      border-radius: 999px;
-      font-size: 0.83rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: radial-gradient(circle at top left, rgba(30, 64, 175, 0.7), rgba(15, 23, 42, 0.9));
-      color: #e5e7eb;
-      cursor: pointer;
-      transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, border-color 0.15s ease-out, background 0.15s ease-out;
-    }
-
-    .chip small {
-      font-size: 0.7rem;
-      text-transform: none;
-      letter-spacing: 0.05em;
-      color: #a5b4fc;
-    }
-
-    .chip-icon {
-      width: 16px;
-      height: 16px;
-      display: inline-block;
-    }
-
-    .chip:hover {
-      transform: translateY(-2px);
-      border-color: rgba(56, 189, 248, 0.9);
-      box-shadow:
-        0 10px 22px rgba(15, 23, 42, 0.9),
-        0 0 20px rgba(56, 189, 248, 0.45);
-      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.85), rgba(15, 23, 42, 0.95));
-    }
-
-    .chip.active {
-      border-color: rgba(234, 179, 8, 0.9);
-      box-shadow:
-        0 10px 24px rgba(15, 23, 42, 0.9),
-        0 0 20px rgba(234, 179, 8, 0.6);
-      background: radial-gradient(circle at top left, rgba(234, 179, 8, 0.85), rgba(15, 23, 42, 0.95));
-    }
-
-    .answer-panel {
-      margin-top: 0.6rem;
-      border-radius: 18px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.96));
-      padding: 1rem 0.95rem;
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      gap: 0.8rem;
-      align-items: center;
-      min-height: 80px;
-      opacity: 0;
-      transform: translateY(10px);
-      pointer-events: none;
-    }
-
-    .answer-panel.visible {
-      animation: slide-up 0.25s ease-out forwards;
-      pointer-events: auto;
-    }
-
-    @keyframes slide-up {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .answer-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.1), rgba(15, 23, 42, 1));
-      border: 1px solid rgba(56, 189, 248, 0.65);
-    }
-
-    .answer-content {
-      font-size: 0.95rem;
-      color: #e5e7eb;
-    }
-
-    .answer-label {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--text-muted);
-      margin-bottom: 0.2rem;
-    }
-
-    .answer-main a {
-      color: #38bdf8;
-      text-decoration: none;
-      word-break: break-all;
-    }
-
-    .answer-main a:hover {
-      text-decoration: underline;
-    }
-
-    .hint {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-top: 0.4rem;
-    }
-
-    .footer {
-      margin-top: auto;
-      font-size: 0.74rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--text-muted);
-      text-align: right;
-    }
-
-    @media (max-width: 840px) {
-      body {
-        padding: 1rem 0.3rem;
-        align-items: flex-start;
-      }
-      .shell {
-        margin-top: 1.2rem;
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .avatar-wrap {
-        position: static;
-        margin-top: 1.1rem;
-      }
-      .left {
-        padding-bottom: 1.4rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .left, .right {
-        padding: 1.2rem 1rem 1.1rem;
-      }
-      .avatar-ring {
-        width: 70px;
-        height: 70px;
-      }
-      .avatar-note {
-        display: none;
-      }
-    }
-  </style>
+        /* Mobile Adjustments */
+        @media (max-width: 500px) {
+            h1 { font-size: 2rem; }
+            .contact-grid { flex-direction: column; }
+        }
+    </style>
 </head>
 <body>
-  <div class="grid"></div>
-  <div class="orb orb--blue"></div>
-  <div class="orb orb--purple"></div>
 
-  <main class="shell">
-    <!-- LEFT: welcome + intro -->
-    <section class="left">
-      <div class="status-pill">
-        <span class="status-dot"></span>
-        <span>Welcome Online</span>
-      </div>
+    <div class="spotlight spot-1"></div>
+    <div class="spotlight spot-2"></div>
 
-      <h1 class="heading-main">Ayan</h1>
-      <p class="sub">Tech • Web • Digital Life</p>
-
-      <p class="typewriter" id="typewriter"></p>
-
-      <div class="divider"></div>
-
-      <p class="mini-label">Start here</p>
-      <p class="prompt">
-        👋 Welcome to my website. Here you will find all my important details.
-        On the right, choose what you want to see — contact number, email, Instagram, or Facebook.
-      </p>
-
-      <div class="avatar-wrap">
-        <div class="avatar-ring">
-          <div class="avatar-ring-inner">
-            <!--
-              🔽 IMPORTANT:
-              Replace "my-photo.jpg" with the actual name of your photo file (e.g. ayan.jpg)
-              and add that image file to your GitHub repo.
-            -->
-            <img src="my-photo.jpg" alt="Photo of Ayan" class="avatar" />
-          </div>
+    <div class="container">
+        <div class="profile-img-container">
+            <img src="https://via.placeholder.com/150/000000/00f3ff?text=AYAN" alt="Ayan Ashraf Magray" class="profile-img">
         </div>
-        <p class="avatar-note">
-          That’s me — Ayan.  
-          Tech enthusiast, always exploring something new.
-        </p>
-      </div>
-    </section>
 
-    <!-- RIGHT: interactive contact selector -->
-    <section class="right">
-      <div>
-        <p class="mini-label">What do you want?</p>
-        <p class="prompt">
-          Tap a button below and I’ll show you exactly what you asked for.
-        </p>
-      </div>
+        <h1>AYAN</h1>
+        <div class="subtitle">IoT & Hardware Specialist</div>
 
-      <div class="choices-row">
-        <!-- Contact number -->
-        <button class="chip" data-type="phone">
-          <span class="chip-icon">
-            <!-- Phone icon -->
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                d="M7.2 4.2 9.6 3a1 1 0 0 1 1.3.5l1.2 2.7a1 1 0 0 1-.2 1.1l-1 1a9.6 9.6 0 0 0 4.4 4.4l1-1a1 1 0 0 1 1.1-.2l2.7 1.2a1 1 0 0 1 .5 1.3l-1.2 2.4A2.2 2.2 0 0 1 18.3 18 13.5 13.5 0 0 1 6 5.7c0-.8.5-1.5 1.2-1.9Z"
-                fill="currentColor"
-              />
-            </svg>
-          </span>
-          Phone
-        </button>
-
-        <!-- Email -->
-        <button class="chip" data-type="email">
-          <span class="chip-icon">
-            <!-- Email icon -->
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                d="M4 6.75A2.75 2.75 0 0 1 6.75 4h10.5A2.75 2.75 0 0 1 20 6.75v10.5A2.75 2.75 0 0 1 17.25 20H6.75A2.75 2.75 0 0 1 4 17.25Z"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-              />
-              <path
-                d="m6.5 8 5.1 3.4a1.5 1.5 0 0 0 1.8 0L18.5 8"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-              />
-            </svg>
-          </span>
-          Email
-        </button>
-
-        <!-- Instagram -->
-        <button class="chip" data-type="instagram">
-          <span class="chip-icon">
-            <!-- Instagram icon -->
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <defs>
-                <linearGradient id="ig-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#f97316" />
-                  <stop offset="40%" stop-color="#ec4899" />
-                  <stop offset="100%" stop-color="#6366f1" />
-                </linearGradient>
-              </defs>
-              <rect x="2" y="2" width="20" height="20" rx="6" fill="url(#ig-grad)" />
-              <circle cx="12" cy="12" r="4" fill="none" stroke="#f9fafb" stroke-width="1.6" />
-              <circle cx="17" cy="7" r="1.1" fill="#f9fafb" />
-            </svg>
-          </span>
-          Instagram
-        </button>
-
-        <!-- Facebook -->
-        <button class="chip" data-type="facebook">
-          <span class="chip-icon">
-            <!-- Facebook icon -->
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="2" y="2" width="20" height="20" rx="5" fill="#1d4ed8" />
-              <path
-                d="M13 19v-5h2.1l.4-3H13V9.1c0-.9.3-1.5 1.6-1.5H15.6V5.1C15.3 5 14.4 5 13.5 5 11.1 5 9.5 6.4 9.5 8.9V11H7.5v3H9.5v5Z"
-                fill="#e5e7eb"
-              />
-            </svg>
-          </span>
-          Facebook
-        </button>
-      </div>
-
-      <div id="answer-panel" class="answer-panel">
-        <div class="answer-icon" id="answer-icon">
-          <!-- icon injected by JS -->
+        <div class="summary">
+            Tech-savvy fresher with a strong foundation in computer hardware, networking, and IoT technologies. Skilled in troubleshooting, system maintenance, and working with microcontroller-based projects such as Arduino. Equipped with multiple technical certifications, including Computer Applications, Business Accounting, Multilingual DTP, and Stenography. Currently pursuing B.A in Political Science and ITI in Computer Hardware & Networking. Passionate about continuous learning, exploring new technologies, and building practical solutions.
         </div>
-        <div class="answer-content">
-          <div class="answer-label" id="answer-label"></div>
-          <div class="answer-main" id="answer-main"></div>
-          <p class="hint" id="answer-hint"></p>
+
+        <div class="contact-grid">
+            <div class="contact-item">
+                <i class="fa-solid fa-envelope"></i>
+                <span>imshahsaqib@gmail.com</span>
+            </div>
+            <div class="contact-item">
+                <i class="fa-brands fa-telegram"></i>
+                <span>OVAIC1430</span>
+            </div>
         </div>
-      </div>
 
-      <p class="footer">
-        Made with 💻 &amp; ⚡ by Ayan
-      </p>
-    </section>
-  </main>
+        <div class="social-links">
+            <a href="https://www.facebook.com/share/1A625yTNov/" target="_blank" class="social-btn" title="Facebook">
+                <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <a href="https://www.instagram.com/ayanovaic?igsh=bHFqNnZ2b3BjdDh6" target="_blank" class="social-btn" title="Instagram">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="https://x.com/PATRIOT_SPIRIT0?t=ecQz6MKSUWHg_t3BQO4Dzg&s=09" target="_blank" class="social-btn" title="Twitter">
+                <i class="fa-brands fa-x-twitter"></i>
+            </a>
+        </div>
 
-  <script>
-    // Typewriter effect for welcome message
-    const typewriterEl = document.getElementById("typewriter");
-    const text = "Welcome to my website! Here you will find all my details — from how to contact me to where I am active on social media. Take a look around and tap what you need.";
-    let index = 0;
+        <div class="chat-gate">
+            <h3><i class="fa-solid fa-comments"></i> Let's Connect</h3>
+            <form id="chatForm">
+                <div class="input-group">
+                    <input type="text" id="visitorName" placeholder="Your Name" required>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="visitorContact" placeholder="Your Contact Info" required>
+                </div>
+                <button type="submit" class="btn-glow">Chat Now</button>
+            </form>
+        </div>
 
-    function typeLoop() {
-      if (index <= text.length) {
-        typewriterEl.textContent = text.slice(0, index);
-        index++;
-        setTimeout(typeLoop, 25);
-      }
-    }
-    typeLoop();
+        <div class="resume-section">
+            <a href="#" class="btn-resume" download>
+                <i class="fa-solid fa-file-pdf"></i> Download Resume
+            </a>
+        </div>
+    </div>
 
-    // Contact selector logic
-    const chips = document.querySelectorAll(".chip");
-    const panel = document.getElementById("answer-panel");
-    const labelEl = document.getElementById("answer-label");
-    const mainEl = document.getElementById("answer-main");
-    const hintEl = document.getElementById("answer-hint");
-    const iconEl = document.getElementById("answer-icon");
+    <script>
+        document.getElementById('chatForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Stop page refresh
+            
+            const name = document.getElementById('visitorName').value;
+            const contact = document.getElementById('visitorContact').value;
 
-    const icons = {
-      phone: `
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path
-            d="M7.2 4.2 9.6 3a1 1 0 0 1 1.3.5l1.2 2.7a1 1 0 0 1-.2 1.1l-1 1a9.6 9.6 0 0 0 4.4 4.4l1-1a1 1 0 0 1 1.1-.2l2.7 1.2a1 1 0 0 1 .5 1.3l-1.2 2.4A2.2 2.2 0 0 1 18.3 18 13.5 13.5 0 0 1 6 5.7c0-.8.5-1.5 1.2-1.9Z"
-            fill="currentColor"
-          />
-        </svg>
-      `,
-      email: `
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path
-            d="M4 6.75A2.75 2.75 0 0 1 6.75 4h10.5A2.75 2.75 0 0 1 20 6.75v10.5A2.75 2.75 0 0 1 17.25 20H6.75A2.75 2.75 0 0 1 4 17.25Z"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-          />
-          <path
-            d="m6.5 8 5.1 3.4a1.5 1.5 0 0 0 1.8 0L18.5 8"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-          />
-        </svg>
-      `,
-      instagram: `
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <defs>
-            <linearGradient id="ig-grad2" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#f97316" />
-              <stop offset="40%" stop-color="#ec4899" />
-              <stop offset="100%" stop-color="#6366f1" />
-            </linearGradient>
-          </defs>
-          <rect x="2" y="2" width="20" height="20" rx="6" fill="url(#ig-grad2)" />
-          <circle cx="12" cy="12" r="4" fill="none" stroke="#f9fafb" stroke-width="1.6" />
-          <circle cx="17" cy="7" r="1.1" fill="#f9fafb" />
-        </svg>
-      `,
-      facebook: `
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <rect x="2" y="2" width="20" height="20" rx="5" fill="#1d4ed8" />
-          <path
-            d="M13 19v-5h2.1l.4-3H13V9.1c0-.9.3-1.5 1.6-1.5H15.6V5.1C15.3 5 14.4 5 13.5 5 11.1 5 9.5 6.4 9.5 8.9V11H7.5v3H9.5v5Z"
-            fill="#e5e7eb"
-          />
-        </svg>
-      `
-    };
-
-    function setAnswer(type) {
-      panel.classList.remove("visible");
-      void panel.offsetWidth; // restart animation
-
-      chips.forEach(c => c.classList.remove("active"));
-      const activeChip = document.querySelector('.chip[data-type="' + type + '"]');
-      if (activeChip) activeChip.classList.add("active");
-
-      if (type === "phone") {
-        labelEl.textContent = "Contact number";
-        mainEl.innerHTML = "+91 6262591914";
-        hintEl.textContent = "You can call or WhatsApp me on this number.";
-      } else if (type === "email") {
-        labelEl.textContent = "Email address";
-        mainEl.innerHTML = '<a href="mailto:ayanovaic@gmail.com">ayanovaic@gmail.com</a>';
-        hintEl.textContent = "Click to send me an email directly.";
-      } else if (type === "instagram") {
-        labelEl.textContent = "Instagram profile";
-        mainEl.innerHTML =
-          '<a href="https://www.instagram.com/ayanovaic?igsh=bHFqNnZ2b3BjdDh6" target="_blank" rel="noopener noreferrer">@ayanovaic</a>';
-        hintEl.textContent = "Tap to open my Instagram profile in a new tab.";
-      } else if (type === "f
+            if(name && contact) {
+                // You can optionally save this data if you had a database, 
+                // but for now we redirect to your chat link as requested.
+                
+                // Alerting for user experience so they know they are being redirected
+                // You can remove the alert line if you prefer instant redirect.
+                alert(`Thanks ${name}, redirecting you to live chat...`);
+                
+                window.location.href = "https://direct.lc.chat/19391384";
+            }
+        });
+    </script>
+</body>
+</html>
