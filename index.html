@@ -1,10 +1,268 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Welcome to My Site</title>
-  </head>
-  <body>
-    <h1>Hello, World!</h1>
-    <p>This is my first GitHub Pages website.</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ayan | Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    /* ----- RESET ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #53354a);
+      background-size: 300% 300%;
+      animation: bg-move 15s ease infinite;
+      color: #f9fafb;
+    }
+
+    @keyframes bg-move {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ----- CARD ----- */
+    .card {
+      width: min(420px, 92vw);
+      padding: 2.5rem 2.25rem;
+      border-radius: 24px;
+      background: rgba(15, 23, 42, 0.9);
+      box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(148, 163, 184, 0.15);
+      backdrop-filter: blur(18px);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      animation: card-pop 0.8s ease-out forwards;
+      transform: translateY(24px);
+      opacity: 0;
+    }
+
+    @keyframes card-pop {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .glow-orb {
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #ff9a9e, transparent 55%);
+      opacity: 0.35;
+      top: -60px;
+      right: -60px;
+      filter: blur(2px);
+      pointer-events: none;
+    }
+
+    .name {
+      font-size: 2.6rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+      background: linear-gradient(120deg, #f97316, #facc15, #22c55e, #38bdf8);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .tagline {
+      font-size: 0.95rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #e5e7eb;
+      opacity: 0.7;
+      margin-bottom: 1.8rem;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-6px); }
+    }
+
+    .line {
+      width: 60px;
+      height: 2px;
+      border-radius: 999px;
+      margin: 0 auto 1.5rem;
+      background: linear-gradient(90deg, #f97316, #ec4899, #6366f1);
+      animation: pulse 2.3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scaleX(1); opacity: 0.7; }
+      50%      { transform: scaleX(1.3); opacity: 1; }
+    }
+
+    .description {
+      font-size: 0.98rem;
+      line-height: 1.6;
+      color: #cbd5f5;
+      margin-bottom: 2.1rem;
+    }
+
+    /* ----- INSTAGRAM BUTTON ----- */
+    .social-wrap {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .insta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.8rem 1.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(248, 250, 252, 0.18);
+      text-decoration: none;
+      color: #f9fafb;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: radial-gradient(
+        circle at 0 0,
+        rgba(251, 113, 133, 0.65),
+        rgba(59, 130, 246, 0.1)
+      );
+      box-shadow:
+        0 10px 25px rgba(15, 23, 42, 0.8),
+        0 0 0 1px rgba(248, 250, 252, 0.08);
+      transform: translateY(0);
+      transition:
+        transform 0.18s ease-out,
+        box-shadow 0.18s ease-out,
+        border-color 0.18s ease-out,
+        background 0.18s ease-out;
+    }
+
+    .insta-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow:
+        0 16px 35px rgba(15, 23, 42, 0.9),
+        0 0 30px rgba(249, 115, 22, 0.55);
+      border-color: rgba(251, 191, 36, 0.8);
+      background: radial-gradient(
+        circle at 0 0,
+        rgba(251, 113, 133, 0.9),
+        rgba(96, 165, 250, 0.35)
+      );
+    }
+
+    .insta-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .insta-text-small {
+      font-size: 0.8rem;
+      opacity: 0.8;
+      text-transform: none;
+      letter-spacing: 0.05em;
+    }
+
+    /* ----- FOOTER ----- */
+    .footer {
+      margin-top: 2.4rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      opacity: 0.5;
+    }
+
+    /* ----- RESPONSIVE ----- */
+    @media (max-width: 480px) {
+      .card {
+        padding: 2rem 1.7rem;
+      }
+      .name {
+        font-size: 2.1rem;
+      }
+      .description {
+        font-size: 0.9rem;
+      }
+      .insta-btn {
+        padding-inline: 1.2rem;
+      }
+      .footer {
+        font-size: 0.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="glow-orb"></div>
+
+    <h1 class="name">Ayan</h1>
+    <p class="tagline">Digital Vibes • Tech • Life</p>
+    <div class="line"></div>
+
+    <p class="description">
+      Welcome to my little corner of the internet. I love exploring tech,
+      the web, and new ideas every day.  
+      Tap the button below to connect with me on Instagram.
+    </p>
+
+    <div class="social-wrap">
+      <a
+        class="insta-btn"
+        href="https://www.instagram.com/ayanovaic?igsh=bHFqNnZ2b3BjdDh6"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <!-- Pure SVG Instagram Icon -->
+        <svg
+          class="insta-icon"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <defs>
+            <linearGradient id="instaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f97316" />
+              <stop offset="40%" stop-color="#ec4899" />
+              <stop offset="100%" stop-color="#6366f1" />
+            </linearGradient>
+          </defs>
+          <rect
+            x="2"
+            y="2"
+            width="20"
+            height="20"
+            rx="6"
+            fill="url(#instaGrad)"
+          />
+          <circle cx="12" cy="12" r="4.2" fill="none" stroke="#f9fafb" stroke-width="1.6" />
+          <circle cx="17" cy="7" r="1.1" fill="#f9fafb" />
+        </svg>
+
+        <span>
+          Instagram<br />
+          <span class="insta-text-small">@ayanovaic</span>
+        </span>
+      </a>
+    </div>
+
+    <p class="footer">Made with 💻 &amp; ✨ by Ayan</p>
+  </main>
+</body>
 </html>
