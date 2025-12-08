@@ -130,6 +130,8 @@
       align-items: center;
       justify-content: space-between;
       gap: 0.75rem;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+
     }
 
     .brand {
@@ -971,40 +973,12 @@
     footer span {
       color: var(--neon-blue);
     }
-    /* MOBILE NAVBAR FIX */
-@media (max-width: 600px) {
-  .top-nav {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0.6rem 0.9rem;
-    border-radius: 1.5rem;
-    gap: 0.45rem;
-  }
-
-  .brand {
-    justify-content: center;
-  }
-
-  .brand-text {
-    font-size: 0.8rem;
-  }
-
-  .nav-links {
-    width: 100%;
-    justify-content: space-between;
-    gap: 0.35rem;
-  }
-
-  .nav-links a {
-    flex: 1;
-    justify-content: center;
-    text-align: center;
-    padding: 0.35rem 0.4rem;
-    font-size: 0.8rem;
-  }
+/* Hide navbar when scrolling down */
+.top-nav.nav-hidden {
+  transform: translateY(-150%);
+  opacity: 0;
+  pointer-events: none;
 }
-
   </style>
 </head>
 <body>
@@ -1015,7 +989,7 @@
     <header class="top-nav">
       <div class="brand">
         <div class="brand-logo">A</div>
-        <div class="brand-text">FOREVER • KNIGHTS</div>
+        <div class="brand-text">Ayan • Portfolio</div>
       </div>
       <nav class="nav-links">
         <a href="#hero"><i class="fa-solid fa-house"></i> Home</a>
@@ -1497,6 +1471,24 @@
 
       window.open(finalUrl, "_blank");
     });
+// Hide navbar on scroll down, show on scroll up
+const navBar = document.querySelector(".top-nav");
+let lastScrollY = window.scrollY;
+
+window.addEventListener("scroll", () => {
+  const currentScroll = window.scrollY;
+
+  // Only start hiding after some scroll (e.g. 80px)
+  if (currentScroll > lastScrollY && currentScroll > 80) {
+    // scrolling down
+    navBar.classList.add("nav-hidden");
+  } else {
+    // scrolling up
+    navBar.classList.remove("nav-hidden");
+  }
+
+  lastScrollY = currentScroll;
+});
   </script>
 </body>
 </html>
