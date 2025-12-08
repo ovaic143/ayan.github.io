@@ -26,9 +26,9 @@
       --neon-purple: #6c5ce7;
       --text-main: #e5e7eb;
       --text-muted: #9ca3af;
-      --card-bg: rgba(15, 23, 42, 0.95);
+      --card-bg: rgba(15, 23, 42, 0.96);
       --border-subtle: rgba(148, 163, 184, 0.35);
-      --shadow-neon: 0 0 25px rgba(0, 217, 255, 0.25);
+      --shadow-neon: 0 0 24px rgba(0, 217, 255, 0.2);
       --radius-xl: 1.75rem;
       --transition-fast: 0.25s ease;
     }
@@ -39,8 +39,9 @@
       --bg-main-soft: #dbeafe;
       --text-main: #020617;
       --text-muted: #4b5563;
-      --card-bg: rgba(255, 255, 255, 0.96);
+      --card-bg: rgba(255, 255, 255, 0.98);
       --border-subtle: rgba(148, 163, 184, 0.7);
+      --shadow-neon: 0 14px 30px rgba(148, 163, 184, 0.45);
     }
 
     * {
@@ -49,7 +50,8 @@
       padding: 0;
     }
 
-    html, body {
+    html,
+    body {
       height: 100%;
       scroll-behavior: smooth;
     }
@@ -60,7 +62,7 @@
       color: var(--text-main);
       overflow-x: hidden;
       position: relative;
-      opacity: 0;
+      opacity: 0; /* Smooth page transition */
       transition: background 0.4s ease, color 0.4s ease, opacity 0.5s ease;
     }
 
@@ -68,7 +70,7 @@
       opacity: 1;
     }
 
-    /* Preloader */
+    /* Preloader (loading animation before site opens) */
     #preloader {
       position: fixed;
       inset: 0;
@@ -94,6 +96,8 @@
       font-size: 1.6rem;
       box-shadow: 0 0 24px rgba(0, 217, 255, 0.9);
       background: radial-gradient(circle at 30% 0%, #ffffff, #0ea5e9);
+      position: relative;
+      z-index: 2;
     }
 
     .spinner-ring {
@@ -120,7 +124,7 @@
       }
     }
 
-    /* Neon moving spotlights in background */
+    /* Neon spotlights */
     body::before,
     body::after {
       content: "";
@@ -132,7 +136,7 @@
         radial-gradient(circle at 20% 0%, rgba(0, 217, 255, 0.25), transparent 60%),
         radial-gradient(circle at 80% 100%, rgba(108, 92, 231, 0.3), transparent 65%);
       mix-blend-mode: screen;
-      opacity: 0.6;
+      opacity: 0.7;
       animation: moveLights 18s ease-in-out infinite alternate;
     }
 
@@ -151,7 +155,7 @@
       }
     }
 
-    /* Parallax shapes */
+    /* Parallax blobs */
     .parallax-shape {
       position: fixed;
       border-radius: 999px;
@@ -209,17 +213,17 @@
       position: relative;
     }
 
-    /* Glassy top nav */
+    /* Floating glass navbar (sticky, transparent, hides on scroll) */
     .top-nav {
       position: sticky;
       top: 0.75rem;
       z-index: 50;
       margin-bottom: 1.75rem;
       backdrop-filter: blur(18px);
-      background: linear-gradient(90deg, rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.4));
+      background: linear-gradient(90deg, rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.45));
       border-radius: 999px;
       border: 1px solid rgba(148, 163, 184, 0.35);
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.54);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.74);
       padding: 0.5rem 1rem;
       display: flex;
       align-items: center;
@@ -229,8 +233,8 @@
     }
 
     body.light-theme .top-nav {
-      background: rgba(255, 255, 255, 0.9);
-      border-color: rgba(148, 163, 184, 0.7);
+      background: rgba(255, 255, 255, 0.93);
+      border-color: rgba(148, 163, 184, 0.8);
       box-shadow: 0 16px 35px rgba(148, 163, 184, 0.45);
     }
 
@@ -251,7 +255,7 @@
       height: 32px;
       border-radius: 999px;
       background: radial-gradient(circle at 30% 30%, #ffffff, var(--neon-blue));
-      box-shadow: 0 0 18px rgba(0, 217, 255, 0.7);
+      box-shadow: 0 0 18px rgba(0, 217, 255, 0.8);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -287,6 +291,7 @@
       display: flex;
       align-items: center;
       gap: 0.35rem;
+      touch-action: manipulation;
     }
 
     .nav-links a i {
@@ -294,14 +299,14 @@
     }
 
     .nav-links a:hover {
-      border-color: rgba(148, 163, 184, 0.6);
+      border-color: rgba(148, 163, 184, 0.7);
       color: var(--neon-blue);
-      box-shadow: 0 0 16px rgba(0, 217, 255, 0.25);
-      background: rgba(15, 23, 42, 0.9);
+      box-shadow: 0 0 18px rgba(0, 217, 255, 0.3);
+      background: rgba(15, 23, 42, 0.96);
     }
 
     body.light-theme .nav-links a:hover {
-      background: rgba(15, 23, 42, 0.05);
+      background: rgba(15, 23, 42, 0.06);
     }
 
     .nav-actions {
@@ -310,12 +315,11 @@
       gap: 0.5rem;
     }
 
-    .theme-toggle,
-    .music-toggle {
+    .theme-toggle {
       width: 30px;
       height: 30px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.7);
       background: rgba(15, 23, 42, 0.95);
       display: flex;
       align-items: center;
@@ -324,15 +328,14 @@
       color: var(--text-main);
       cursor: pointer;
       transition: var(--transition-fast);
+      touch-action: manipulation;
     }
 
-    body.light-theme .theme-toggle,
-    body.light-theme .music-toggle {
-      background: rgba(255, 255, 255, 0.9);
+    body.light-theme .theme-toggle {
+      background: rgba(255, 255, 255, 0.95);
     }
 
-    .theme-toggle:hover,
-    .music-toggle:hover {
+    .theme-toggle:hover {
       box-shadow: 0 0 14px rgba(0, 217, 255, 0.45);
       transform: translateY(-1px);
     }
@@ -359,7 +362,7 @@
       content: "";
       width: 24px;
       height: 1px;
-      background: linear-gradient(90deg, rgba(148, 163, 184, 0.1), rgba(0, 217, 255, 0.9));
+      background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.7), transparent);
       border-radius: 999px;
     }
 
@@ -480,7 +483,7 @@
     }
 
     .hero-tagline {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       color: var(--text-muted);
       margin-bottom: 0.8rem;
     }
@@ -508,10 +511,12 @@
     }
 
     @keyframes blink {
-      0%, 50% {
+      0%,
+      50% {
         opacity: 1;
       }
-      50.1%, 100% {
+      50.1%,
+      100% {
         opacity: 0;
       }
     }
@@ -563,14 +568,7 @@
       position: absolute;
       inset: -10%;
       border-radius: inherit;
-      background:
-        conic-gradient(
-          from 0deg,
-          rgba(0, 217, 255, 0.45),
-          rgba(108, 92, 231, 0.3),
-          transparent,
-          rgba(0, 217, 255, 0.4)
-        );
+      background: conic-gradient(from 0deg, rgba(0, 217, 255, 0.45), rgba(108, 92, 231, 0.3), transparent, rgba(0, 217, 255, 0.4));
       opacity: 0.4;
       filter: blur(12px);
       animation: orbit 14s linear infinite;
@@ -609,7 +607,6 @@
       justify-content: center;
       position: relative;
       overflow: hidden;
-      transform: translateZ(0);
     }
 
     .avatar-ring::after {
@@ -628,7 +625,7 @@
       object-fit: cover;
       display: block;
       transform: translateY(0);
-      transition: transform 0.4s ease;
+      transition: transform 0.35s ease;
     }
 
     .avatar-ring:hover .avatar-photo {
@@ -698,7 +695,7 @@
       padding: 0.65rem 0.85rem;
       border-radius: 0.9rem;
       border: 1px solid rgba(148, 163, 184, 0.35);
-      background: rgba(15, 23, 42, 0.95);
+      background: rgba(15, 23, 42, 0.96);
       box-shadow: 0 0 12px rgba(15, 23, 42, 0.9);
       text-decoration: none;
       color: var(--text-main);
@@ -706,18 +703,19 @@
       transition: var(--transition-fast);
       position: relative;
       overflow: hidden;
+      touch-action: manipulation;
     }
 
     body.light-theme .contact-card {
-      background: rgba(255, 255, 255, 0.96);
-      box-shadow: 0 8px 20px rgba(148, 163, 184, 0.35);
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 10px 22px rgba(148, 163, 184, 0.35);
     }
 
     .contact-card::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.12), transparent 50%);
+      background: radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.18), transparent 50%);
       opacity: 0;
       transition: opacity var(--transition-fast);
     }
@@ -752,11 +750,6 @@
       color: #ffffff;
     }
 
-    .contact-card.whatsapp .contact-icon-wrap {
-      background: radial-gradient(circle at 30% 20%, #ffffff, #22c55e);
-      color: #166534;
-    }
-
     .contact-text-main {
       font-weight: 500;
       word-break: break-all;
@@ -773,13 +766,13 @@
       border-color: rgba(56, 189, 248, 0.7);
     }
 
-    /* About / summary */
+    /* ABOUT / summary */
     .summary-card {
       border-radius: var(--radius-xl);
       padding: 1.35rem 1.5rem 1.4rem;
       background: var(--card-bg);
       border: 1px solid var(--border-subtle);
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.8);
+      box-shadow: var(--shadow-neon);
       display: grid;
       grid-template-columns: minmax(0, 3fr) minmax(0, 2.1fr);
       gap: 1.5rem;
@@ -814,7 +807,7 @@
       padding: 0.25rem 0.7rem;
       border-radius: 999px;
       border: 1px solid rgba(148, 163, 184, 0.55);
-      background: rgba(15, 23, 42, 0.95);
+      background: rgba(15, 23, 42, 0.96);
       color: var(--text-muted);
       display: inline-flex;
       align-items: center;
@@ -841,7 +834,7 @@
     .summary-item {
       border-radius: 1rem;
       padding: 0.7rem 0.8rem;
-      background: rgba(15, 23, 42, 0.95);
+      background: rgba(15, 23, 42, 0.96);
       border: 1px solid rgba(148, 163, 184, 0.38);
       display: flex;
       align-items: flex-start;
@@ -850,7 +843,7 @@
 
     body.light-theme .summary-item {
       background: rgba(255, 255, 255, 0.98);
-      box-shadow: 0 8px 20px rgba(148, 163, 184, 0.3);
+      box-shadow: 0 10px 24px rgba(148, 163, 184, 0.3);
     }
 
     .summary-item i {
@@ -879,7 +872,7 @@
       border-radius: 1.4rem;
       background: var(--card-bg);
       border: 1px solid var(--border-subtle);
-      box-shadow: 0 14px 35px rgba(15, 23, 42, 0.85);
+      box-shadow: var(--shadow-neon);
       padding: 0.95rem 1rem;
       display: flex;
       flex-direction: column;
@@ -888,13 +881,9 @@
       transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
-    body.light-theme .skill-card {
-      box-shadow: 0 12px 28px rgba(148, 163, 184, 0.35);
-    }
-
     .skill-card:hover {
       transform: translateY(-4px) translateX(1px);
-      box-shadow: 0 0 28px rgba(0, 217, 255, 0.35);
+      box-shadow: 0 0 26px rgba(0, 217, 255, 0.35);
     }
 
     .skill-title {
@@ -929,7 +918,7 @@
       border-radius: 1.4rem;
       background: var(--card-bg);
       border: 1px solid var(--border-subtle);
-      box-shadow: 0 14px 35px rgba(15, 23, 42, 0.9);
+      box-shadow: var(--shadow-neon);
       overflow: hidden;
     }
 
@@ -944,6 +933,7 @@
       justify-content: space-between;
       gap: 0.6rem;
       cursor: pointer;
+      touch-action: manipulation;
     }
 
     .accordion-header-left {
@@ -1013,7 +1003,7 @@
       padding: 0.9rem 1rem;
       border: 1px solid rgba(148, 163, 184, 0.4);
       background: var(--card-bg);
-      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.9);
+      box-shadow: var(--shadow-neon);
       text-decoration: none;
       color: var(--text-main);
       display: flex;
@@ -1031,8 +1021,8 @@
       opacity: 0;
       mix-blend-mode: screen;
       background:
-        radial-gradient(circle at 0 0, rgba(0, 217, 255, 0.18), transparent 60%),
-        radial-gradient(circle at 100% 100%, rgba(108, 92, 231, 0.25), transparent 60%);
+        radial-gradient(circle at 0 0, rgba(0, 217, 255, 0.2), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(108, 92, 231, 0.3), transparent 60%);
       transition: opacity var(--transition-fast), transform var(--transition-fast);
       transform: scale(0.95);
     }
@@ -1125,44 +1115,13 @@
       border-color: rgba(56, 189, 248, 0.9);
     }
 
-    /* QR section */
-    .qr-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 0.9rem;
-    }
-
-    .qr-card {
-      border-radius: 1.1rem;
-      border: 1px solid var(--border-subtle);
-      background: var(--card-bg);
-      padding: 0.7rem 0.8rem;
-      font-size: 0.78rem;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      align-items: center;
-    }
-
-    .qr-card img {
-      width: 100px;
-      height: 100px;
-      border-radius: 0.6rem;
-      border: 1px solid rgba(148, 163, 184, 0.8);
-    }
-
-    .qr-label {
-      font-weight: 500;
-    }
-
     /* Contact section */
     .contact-layout {
       border-radius: var(--radius-xl);
       padding: 1.4rem 1.5rem;
       background: var(--card-bg);
       border: 1px solid var(--border-subtle);
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.9);
+      box-shadow: var(--shadow-neon);
       display: grid;
       grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
       gap: 1.5rem;
@@ -1204,13 +1163,15 @@
 
     .input {
       border-radius: 0.9rem;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.96);
       padding: 0.55rem 0.75rem;
       font-size: 0.82rem;
       color: var(--text-main);
       outline: none;
       transition: var(--transition-fast);
+      resize: vertical;
+      min-height: 2.3rem;
     }
 
     body.light-theme .input {
@@ -1218,7 +1179,7 @@
     }
 
     .input::placeholder {
-      color: rgba(148, 163, 184, 0.7);
+      color: rgba(148, 163, 184, 0.8);
     }
 
     .input:focus {
@@ -1256,6 +1217,7 @@
       transition: var(--transition-fast);
       position: relative;
       overflow: hidden;
+      touch-action: manipulation;
     }
 
     .btn-primary {
@@ -1266,7 +1228,7 @@
     }
 
     .btn-outline {
-      border-color: rgba(148, 163, 184, 0.6);
+      border-color: rgba(148, 163, 184, 0.7);
       background: rgba(15, 23, 42, 0.96);
     }
 
@@ -1357,7 +1319,7 @@
       color: var(--neon-blue);
     }
 
-    /* Scroll to top button */
+    /* Scroll-to-top button */
     #scrollTopBtn {
       position: fixed;
       bottom: 1.6rem;
@@ -1378,6 +1340,7 @@
       transform: translateY(20px);
       pointer-events: none;
       transition: opacity 0.25s ease, transform 0.25s ease;
+      touch-action: manipulation;
     }
 
     #scrollTopBtn.visible {
@@ -1413,7 +1376,7 @@
       background: var(--card-bg);
       border-radius: 1.4rem;
       border: 1px solid var(--border-subtle);
-      box-shadow: 0 18px 50px rgba(15, 23, 42, 0.95);
+      box-shadow: var(--shadow-neon);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -1444,6 +1407,7 @@
       cursor: pointer;
       background: transparent;
       color: var(--text-muted);
+      touch-action: manipulation;
     }
 
     .modal-body {
@@ -1462,7 +1426,7 @@
       border: none;
     }
 
-    /* Reveal animations for sections */
+    /* Reveal on scroll */
     .reveal {
       opacity: 0;
       transform: translateY(18px);
@@ -1474,7 +1438,7 @@
       transform: translateY(0);
     }
 
-    /* Mobile navbar fix */
+    /* Mobile responsiveness & touch spacing */
     @media (max-width: 600px) {
       .top-nav {
         flex-direction: column;
@@ -1511,6 +1475,35 @@
         width: 100%;
         justify-content: center;
       }
+
+      .page-wrapper {
+        padding-inline: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-name {
+        font-size: 2.2rem;
+      }
+
+      .name-block,
+      .photo-card,
+      .summary-card,
+      .contact-layout {
+        padding-inline: 1rem;
+      }
+    }
+
+    @media (min-width: 840px) and (max-width: 1024px) {
+      .page-wrapper {
+        padding-inline: 1.5rem;
+      }
+
+      .hero-layout,
+      .summary-card,
+      .contact-layout {
+        gap: 1.3rem;
+      }
     }
   </style>
 </head>
@@ -1526,12 +1519,6 @@
   <div class="grid-overlay"></div>
   <div class="parallax-shape one" data-speed="0.2"></div>
   <div class="parallax-shape two" data-speed="0.35"></div>
-
-  <!-- Audio for background music (add your own file path) -->
-  <!-- Replace music.mp3 with your file path or URL -->
-  <audio id="bg-music" loop>
-    <source src="music.mp3" type="audio/mpeg" />
-  </audio>
 
   <div class="page-wrapper">
     <!-- NAVBAR -->
@@ -1549,19 +1536,16 @@
         <a href="#contact"><i class="fa-solid fa-comments"></i> Contact</a>
       </nav>
       <div class="nav-actions">
-        <button id="musicToggle" class="music-toggle" title="Toggle background music">
-          <i class="fa-solid fa-music"></i>
-        </button>
         <button id="themeToggle" class="theme-toggle" title="Toggle dark / light mode">
           <i class="fa-solid fa-moon"></i>
         </button>
       </div>
     </header>
 
-    <!-- HERO: Name + Photo + Primary Contact -->
+    <!-- HERO -->
     <section id="hero" class="section">
       <div class="hero-layout reveal">
-        <!-- Left: Name and intro -->
+        <!-- Left -->
         <div class="name-block">
           <div class="name-block-inner">
             <div class="eyebrow">
@@ -1577,25 +1561,19 @@
               <span class="cursor"></span>
             </div>
             <p class="hero-mini-note">
-              Building practical projects, learning every day, and exploring the connection between
-              technology and real-world impact.
+              Building practical projects, learning every day, and exploring how technology solves real-world problems.
             </p>
           </div>
         </div>
 
-        <!-- Right: Photo + primary contact under photo -->
+        <!-- Right: Photo + primary contact -->
         <aside class="hero-aside">
           <div class="photo-card">
             <div class="photo-orbit"></div>
             <div class="photo-inner">
               <div class="avatar-ring">
-                <!-- Your photo -->
-                <!-- Make sure ayan.jpg is in the same folder as index.html, or update the path -->
-                <img
-                  class="avatar-photo"
-                  src="ayan.jpg"
-                  alt="Ayan profile photo"
-                />
+                <!-- Put ayan.jpg in the same folder as index.html -->
+                <img src="ayan.jpg" alt="Ayan profile photo" class="avatar-photo" />
               </div>
               <div class="photo-caption">
                 Always curious, always connected — this is the face behind the circuits and code.
@@ -1617,12 +1595,11 @@
               </div>
             </div>
 
-            <!-- Primary contact moved here, under the photo -->
+            <!-- Primary contact -->
             <div class="contact-stack">
               <div class="contact-label">Primary contact</div>
               <div class="contact-items">
-                <!-- EMAIL -->
-                <a href="mailto:imshahayan@gmail.com" class="contact-card email">
+                <a href="mailto:imshahayan@gmail.com" class="contact-card">
                   <div class="contact-icon-wrap">
                     <i class="fa-solid fa-envelope"></i>
                   </div>
@@ -1632,7 +1609,6 @@
                   </div>
                 </a>
 
-                <!-- INSTAGRAM as primary contact -->
                 <a href="https://www.instagram.com/ayanovaic?igsh=bHFqNnZ2b3BjdDh6" target="_blank" class="contact-card instagram">
                   <div class="contact-icon-wrap">
                     <i class="fa-brands fa-instagram"></i>
@@ -1640,18 +1616,6 @@
                   <div>
                     <div class="contact-text-main">@ayanovaic</div>
                     <div class="contact-text-sub">Instagram • Tap to open</div>
-                  </div>
-                </a>
-
-                <!-- WhatsApp button -->
-                <!-- Replace 91XXXXXXXXXX with your actual WhatsApp number -->
-                <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="contact-card whatsapp">
-                  <div class="contact-icon-wrap">
-                    <i class="fa-brands fa-whatsapp"></i>
-                  </div>
-                  <div>
-                    <div class="contact-text-main">Chat on WhatsApp</div>
-                    <div class="contact-text-sub">Direct message • Quick replies</div>
                   </div>
                 </a>
               </div>
@@ -1663,7 +1627,7 @@
 
     <div class="divider-line"></div>
 
-    <!-- ABOUT / PERSONAL SUMMARY -->
+    <!-- ABOUT -->
     <section id="about" class="section">
       <div class="section-heading">
         <span>Profile</span>
@@ -1674,16 +1638,16 @@
         <div>
           <p class="summary-text">
             I am a <span class="summary-highlight">tech-savvy fresher</span> with a strong foundation in
-            computer hardware, networking, and IoT technologies. Skilled in troubleshooting, system
-            maintenance, and working with microcontroller-based projects such as
-            <span class="summary-highlight">Arduino</span>. Equipped with multiple technical certifications,
-            including <span class="summary-highlight">Computer Applications</span>,
+            computer hardware, networking, and IoT technologies. Skilled in troubleshooting, system maintenance,
+            and working with microcontroller-based projects such as <span class="summary-highlight">Arduino</span>.
+            Equipped with multiple technical certifications, including
+            <span class="summary-highlight">Computer Applications</span>,
             <span class="summary-highlight">Business Accounting</span>,
             <span class="summary-highlight">Multilingual DTP</span>, and
             <span class="summary-highlight">Stenography</span>. Currently pursuing
             <span class="summary-highlight">B.A in Political Science</span> and
-            <span class="summary-highlight">ITI in Computer Hardware &amp; Networking</span>. Passionate
-            about continuous learning, exploring new technologies, and building practical solutions.
+            <span class="summary-highlight">ITI in Computer Hardware &amp; Networking</span>. Passionate about continuous learning,
+            exploring new technologies, and building practical solutions.
           </p>
 
           <div class="summary-tags">
@@ -1728,7 +1692,7 @@
             <div>
               <div class="summary-item-title">IoT &amp; Microcontrollers</div>
               <div class="summary-item-sub">
-                Hands-on Arduino and microcontroller-based practical projects.
+                Hands-on Arduino and microcontroller-based projects.
               </div>
             </div>
           </div>
@@ -1805,7 +1769,7 @@
 
     <div class="divider-line"></div>
 
-    <!-- PROJECTS (Accordion) -->
+    <!-- PROJECTS (collapsible) -->
     <section id="projects" class="section">
       <div class="section-heading">
         <span>Projects</span>
@@ -1828,7 +1792,7 @@
               <p>Small microcontroller-based practical projects that connect hardware with logic.</p>
               <ul>
                 <li>Basic sensor reading and data display.</li>
-                <li>LED control and automation concepts.</li>
+                <li>LED control and simple automation.</li>
                 <li>Experimenting with real-world input and output devices.</li>
               </ul>
             </div>
@@ -1849,8 +1813,8 @@
             <div class="accordion-content">
               <p>Hands-on experience with assembling and configuring systems.</p>
               <ul>
-                <li>Assembling desktop PCs and optimizing them for usage.</li>
-                <li>Setting up routers, Wi-Fi networks, and basic LANs.</li>
+                <li>Assembling desktop PCs and optimizing them for daily use.</li>
+                <li>Setting up routers, Wi-Fi networks, and basic LAN.</li>
                 <li>Troubleshooting hardware and connectivity problems.</li>
               </ul>
             </div>
@@ -1861,7 +1825,7 @@
 
     <div class="divider-line"></div>
 
-    <!-- CERTIFICATES (Accordion) -->
+    <!-- CERTIFICATES (collapsible) -->
     <section id="certificates" class="section">
       <div class="section-heading">
         <span>Certificates</span>
@@ -1910,8 +1874,8 @@
                 <i class="fa-solid fa-eye"></i> Open Resume Viewer
               </button>
               <p style="font-size: 0.74rem;">
-                <!-- Replace resume.pdf with your actual resume path -->
-                (Make sure you upload <strong>resume.pdf</strong> in the same folder as this website.)
+                <!-- Put resume.pdf in the same folder as index.html or change the src in the iframe below -->
+                (Upload <strong>resume.pdf</strong> next to this file to make the viewer work.)
               </p>
             </div>
           </div>
@@ -1921,7 +1885,7 @@
 
     <div class="divider-line"></div>
 
-    <!-- SOCIAL MEDIA -->
+    <!-- SOCIALS -->
     <section id="social" class="section">
       <div class="section-heading">
         <span>Social Presence</span>
@@ -1938,7 +1902,7 @@
               </div>
               <div>
                 <div class="social-name">Facebook</div>
-                <div class="social-meta">Stay updated with my posts</div>
+                <div class="social-meta">Updates &amp; posts</div>
               </div>
             </div>
             <div class="chip-pill">
@@ -1982,7 +1946,7 @@
               </div>
               <div>
                 <div class="social-name">X (Twitter)</div>
-                <div class="social-meta">Thoughts, ideas &amp; updates</div>
+                <div class="social-meta">Thoughts &amp; ideas</div>
               </div>
             </div>
             <div class="chip-pill">
@@ -2004,7 +1968,7 @@
               </div>
               <div>
                 <div class="social-name">Snapchat</div>
-                <div class="social-meta">Stories, streaks &amp; quick moments</div>
+                <div class="social-meta">Stories &amp; streaks</div>
               </div>
             </div>
             <div class="chip-pill">
@@ -2019,36 +1983,9 @@
       </div>
     </section>
 
-    <!-- QR CODES -->
-    <section class="section">
-      <div class="section-heading">
-        <span>QR Links</span>
-      </div>
-      <h2 class="section-title">Scan &amp; Connect Faster</h2>
-
-      <div class="qr-grid reveal">
-        <!-- These QR images are generated via a free API using your URLs -->
-        <div class="qr-card">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://www.instagram.com/ayanovaic?igsh=bHFqNnZ2b3BjdDh6" alt="Instagram QR" />
-          <div class="qr-label">Instagram</div>
-          <div>Scan to open @ayanovaic</div>
-        </div>
-        <div class="qr-card">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://t.me/OVAIC1430" alt="Telegram QR" />
-          <div class="qr-label">Telegram</div>
-          <div>Scan to chat @OVAIC1430</div>
-        </div>
-        <div class="qr-card">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://wa.me/91XXXXXXXXXX" alt="WhatsApp QR" />
-          <div class="qr-label">WhatsApp</div>
-          <div>Scan to open WhatsApp chat</div>
-        </div>
-      </div>
-    </section>
-
     <div class="divider-line"></div>
 
-    <!-- CONTACT / CHAT -->
+    <!-- CONTACT -->
     <section id="contact" class="section">
       <div class="section-heading">
         <span>Contact</span>
@@ -2077,7 +2014,7 @@
             </div>
 
             <div class="field">
-              <label class="field-label" for="contact">
+              <label class="field-label" for="contact-info">
                 Contact Info <span>*</span>
               </label>
               <input
@@ -2109,9 +2046,16 @@
               <button type="button" id="chat-btn" class="btn btn-primary">
                 <i class="fa-solid fa-comments"></i> Chat Now
               </button>
+
+              <!-- Telegram link added here -->
+              <a href="https://t.me/OVAIC1430" target="_blank" class="btn btn-outline">
+                <i class="fa-brands fa-telegram"></i> Message on Telegram
+              </a>
+
               <button type="reset" class="btn btn-outline">
                 <i class="fa-solid fa-eraser"></i> Clear
               </button>
+
               <span id="error-text" class="error-text">
                 Please fill in your name and contact details first.
               </span>
@@ -2126,26 +2070,28 @@
             <div>
               <div style="font-weight: 500; margin-bottom: 0.15rem;">Fast &amp; Direct</div>
               <div>
-                Your message reaches me directly via live chat. Just fill in your basic details so I know who
-                you are and how to reach you back.
+                Your message reaches me directly via live chat or Telegram. Just fill in your basic details so I know who you are and how to reach you back.
               </div>
             </div>
           </div>
 
           <div class="contact-highlight-box">
-            <i class="fa-solid fa-clock"></i>
+            <i class="fa-solid fa-envelope-open-text"></i>
             <div>
-              <div style="font-weight: 500; margin-bottom: 0.15rem;">Best Way to Reach Me</div>
+              <div style="font-weight: 500; margin-bottom: 0.15rem;">Other Ways to Reach Me</div>
               <div>
-                Email me at
-                <span style="color: var(--neon-blue);">imshahayan@gmail.com</span>, ping me on Telegram
-                <span style="color: var(--neon-blue);">@OVAIC1430</span>, or use the chat button.
+                Email:
+                <span style="color: var(--neon-blue);">imshahayan@gmail.com</span><br />
+                Telegram:
+                <a href="https://t.me/OVAIC1430" target="_blank" style="color: var(--neon-blue); text-decoration: none;">
+                  @OVAIC1430
+                </a>
               </div>
             </div>
           </div>
 
-          <div class="visit-counter" id="visitCounter">
-            <!-- Filled by JavaScript -->
+          <div id="visitCounter" class="visit-counter">
+            <!-- Filled by JS (live visitor counter) -->
           </div>
         </div>
       </div>
@@ -2156,7 +2102,7 @@
     </footer>
   </div>
 
-  <!-- Scroll to top button -->
+  <!-- Scroll-to-top -->
   <button id="scrollTopBtn" aria-label="Scroll to top">
     <i class="fa-solid fa-arrow-up"></i>
   </button>
@@ -2171,14 +2117,14 @@
         </button>
       </div>
       <div class="modal-body">
-        <!-- Replace resume.pdf with your own file -->
+        <!-- Put resume.pdf in the same folder as index.html, or change this path -->
         <iframe src="resume.pdf"></iframe>
       </div>
     </div>
   </div>
 
   <script>
-    // Page load / preloader
+    // PRELOADER + smooth page appearance
     window.addEventListener("load", () => {
       const preloader = document.getElementById("preloader");
       document.body.classList.add("page-loaded");
@@ -2189,7 +2135,7 @@
       }, 700);
     });
 
-    // Typing effect for hero subtitle
+    // Typing effect
     const typingTextElement = document.getElementById("typing-text");
     const roles = [
       "Tech-savvy fresher exploring IoT.",
@@ -2197,7 +2143,6 @@
       "Arduino & microcontroller learner.",
       "Always learning, always building."
     ];
-
     let roleIndex = 0;
     let charIndex = 0;
     let deleting = false;
@@ -2224,7 +2169,6 @@
       const delay = deleting ? 45 : 70;
       setTimeout(typeLoop, delay);
     }
-
     typeLoop();
 
     // Scroll reveal
@@ -2256,7 +2200,7 @@
 
       if (!name || !contact) {
         errorText.classList.add("visible");
-        // Simple shake effect
+        // Simple shake
         chatBtn.style.transform = "translateX(-2px)";
         setTimeout(() => {
           chatBtn.style.transform = "translateX(2px)";
@@ -2270,15 +2214,12 @@
       errorText.classList.remove("visible");
 
       const baseChatUrl = "https://direct.lc.chat/19391384";
-
       const params = new URLSearchParams({
         name,
         contact,
         note: message || "Visitor from portfolio site",
       });
-
       const finalUrl = baseChatUrl + "?" + params.toString();
-
       window.open(finalUrl, "_blank");
     });
 
@@ -2321,7 +2262,7 @@
       });
     });
 
-    // Dark / Light mode toggle
+    // Dark / light mode toggle with localStorage
     const themeToggle = document.getElementById("themeToggle");
     function applyThemeFromStorage() {
       const saved = localStorage.getItem("ayan-theme");
@@ -2341,23 +2282,6 @@
       applyThemeFromStorage();
     });
 
-    // Background music toggle
-    const musicToggle = document.getElementById("musicToggle");
-    const bgMusic = document.getElementById("bg-music");
-    let musicPlaying = false;
-
-    musicToggle.addEventListener("click", () => {
-      if (!musicPlaying) {
-        bgMusic.play().catch(() => {});
-        musicPlaying = true;
-        musicToggle.innerHTML = '<i class="fa-solid fa-music-slash"></i>';
-      } else {
-        bgMusic.pause();
-        musicPlaying = false;
-        musicToggle.innerHTML = '<i class="fa-solid fa-music"></i>';
-      }
-    });
-
     // Accordion logic (Projects, Certificates)
     function setupAccordion(rootId) {
       const root = document.getElementById(rootId);
@@ -2369,12 +2293,15 @@
         const body = item.querySelector(".accordion-body");
         header.addEventListener("click", () => {
           const open = item.classList.contains("open");
-          // close all
+
+          // Close all
           items.forEach((it) => {
             it.classList.remove("open");
             const b = it.querySelector(".accordion-body");
             b.style.maxHeight = null;
           });
+
+          // Open clicked
           if (!open) {
             item.classList.add("open");
             body.style.maxHeight = body.scrollHeight + "px";
@@ -2406,7 +2333,7 @@
       }
     });
 
-    // Visit counter (local to this device)
+    // Live visitor counter (per device)
     const visitCounterEl = document.getElementById("visitCounter");
     let visits = Number(localStorage.getItem("ayan-visits") || "0");
     visits += 1;
