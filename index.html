@@ -6,27 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
         :root {
-            --bg-light-main: #dfe9ff;
-            --bg-light-alt: #c7d4e8;
-            --bg-light-soft: #eaf3ff;
-
-            --bg-dark-main: #0a0c14;
+            --bg-base: #dfe5f3;
+            --bg-soft: #edf2ff;
+            --bg-gray: #cfd5e2;
+            --bg-dark-main: #050712;
 
             --accent-blue: #5ea5ff;
             --accent-green: #49d4b2;
 
-            --text-dark: #0b1020;
-            --text-light: #f8f9ff;
+            --text-dark: #111827;
+            --text-muted-dark: #4b5563;
+            --text-light: #f9fafb;
+            --text-muted-light: #e5e7eb;
 
             --border-soft-blue: rgba(94, 165, 255, 0.45);
             --border-soft-green: rgba(73, 212, 178, 0.45);
-            --border-soft-gray: rgba(0, 0, 0, 0.06);
+            --border-soft-gray: rgba(15, 23, 42, 0.08);
 
-            --glass-light: rgba(255, 255, 255, 0.72);
-            --glass-dark: rgba(10, 14, 32, 0.82);
+            --glass-light: rgba(255, 255, 255, 0.86);
+            --glass-dark: rgba(15, 23, 42, 0.86);
 
-            --shadow-neon-soft: 0 0 18px rgba(94, 165, 255, 0.35),
-                                0 0 28px rgba(73, 212, 178, 0.2);
+            --shadow-neon-soft: 0 0 18px rgba(94, 165, 255, 0.38),
+                                0 0 28px rgba(73, 212, 178, 0.28);
 
             --transition-fast: 0.2s ease;
             --transition-med: 0.45s ease;
@@ -44,20 +45,13 @@
             display: flex;
             flex-direction: column;
             color: var(--text-dark);
-            background:
-                radial-gradient(circle at 0% 0%, #f4f7ff 0, transparent 55%),
-                radial-gradient(circle at 100% 0%, #e3f3ff 0, transparent 55%),
-                radial-gradient(circle at 100% 100%, #d6e3ff 0, transparent 55%),
-                linear-gradient(135deg, var(--bg-light-main), var(--bg-light-soft));
+            background: var(--bg-base);
             overflow-x: hidden;
         }
 
         body.dark {
             color: var(--text-light);
-            background:
-                radial-gradient(circle at 0% 0%, #1d2940 0, transparent 55%),
-                radial-gradient(circle at 100% 0%, #16304b 0, transparent 55%),
-                linear-gradient(135deg, #0c1220, #060814);
+            background: var(--bg-dark-main);
         }
 
         a {
@@ -70,61 +64,53 @@
             display: block;
         }
 
-        /* BACKGROUND LAYERS */
+        /* BACKGROUND LAYERS (SOFT NEON ANIMATION) */
         .bg-layer {
             position: fixed;
             inset: -80px;
             z-index: -3;
             pointer-events: none;
             background:
-                radial-gradient(circle at 0% 0%, rgba(94, 165, 255, 0.22), transparent 55%),
+                radial-gradient(circle at 0% 0%, rgba(94, 165, 255, 0.26), transparent 55%),
                 radial-gradient(circle at 100% 0%, rgba(73, 212, 178, 0.22), transparent 55%),
-                radial-gradient(circle at 50% 100%, rgba(145, 160, 210, 0.3), transparent 55%),
-                linear-gradient(135deg, var(--bg-light-main), var(--bg-light-alt));
+                radial-gradient(circle at 100% 100%, rgba(169, 181, 220, 0.3), transparent 55%),
+                radial-gradient(circle at 0% 100%, rgba(151, 174, 216, 0.27), transparent 55%),
+                linear-gradient(135deg, var(--bg-base), var(--bg-soft));
+            animation: bgFloat 18s ease-in-out infinite alternate;
+            filter: saturate(0.95);
         }
 
         body.dark .bg-layer {
             background:
-                radial-gradient(circle at 0% 0%, rgba(94, 165, 255, 0.28), transparent 55%),
-                radial-gradient(circle at 100% 0%, rgba(73, 212, 178, 0.25), transparent 55%),
-                linear-gradient(135deg, #050712, #060a18);
+                radial-gradient(circle at 0% 0%, rgba(94, 165, 255, 0.33), transparent 55%),
+                radial-gradient(circle at 100% 0%, rgba(73, 212, 178, 0.26), transparent 55%),
+                radial-gradient(circle at 50% 100%, rgba(62, 83, 141, 0.45), transparent 55%),
+                linear-gradient(135deg, #050712, #050812);
+            filter: saturate(1.05);
         }
 
-        .bg-spotlight {
-            position: fixed;
-            width: 420px;
-            height: 420px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(94, 165, 255, 0.33), transparent 70%);
-            mix-blend-mode: soft-light;
-            pointer-events: none;
-            z-index: -2;
-            transform: translate3d(0, 0, 0);
-            transition: transform 0.22s ease-out;
-            opacity: 0.75;
-        }
-
-        body.dark .bg-spotlight {
-            mix-blend-mode: screen;
-            opacity: 0.8;
+        @keyframes bgFloat {
+            0% { transform: translate3d(0, 0, 0) scale(1); }
+            50% { transform: translate3d(-10px, 8px, 0) scale(1.03); }
+            100% { transform: translate3d(10px, -8px, 0) scale(1.02); }
         }
 
         .bg-watermark {
             position: fixed;
             inset: 0;
             pointer-events: none;
-            z-index: -1;
+            z-index: -2;
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0.07;
+            opacity: 0.06;
         }
 
         .watermark-text {
-            font-size: clamp(2.4rem, 8vw, 4rem);
+            font-size: clamp(2.3rem, 7vw, 4rem);
             letter-spacing: 0.45em;
             text-transform: uppercase;
-            color: #9da7c3;
+            color: #7b8193;
             text-align: center;
             transform: rotate(-18deg);
             border-top: 1px solid rgba(94, 165, 255, 0.5);
@@ -134,7 +120,58 @@
         }
 
         body.dark .watermark-text {
-            color: #6b7390;
+            color: #4b5263;
+        }
+
+        /* ROBOT HEART BACKGROUND */
+        .bg-heart {
+            position: fixed;
+            bottom: 8%;
+            right: 8%;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.35;
+            z-index: -1;
+        }
+
+        .heart-core {
+            position: relative;
+            width: 34px;
+            height: 30px;
+            transform: rotate(-45deg);
+            background: linear-gradient(135deg, #e5e7eb, #cbd5f5);
+            box-shadow: 0 0 22px rgba(148, 163, 184, 0.7);
+            animation: heartBeat 3.6s ease-in-out infinite;
+        }
+
+        .heart-core::before,
+        .heart-core::after {
+            content: "";
+            position: absolute;
+            width: 34px;
+            height: 30px;
+            border-radius: 50%;
+            background: inherit;
+        }
+
+        .heart-core::before { top: -50%; left: 0; }
+        .heart-core::after { left: 50%; top: 0; }
+
+        body.dark .heart-core {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            box-shadow: 0 0 22px rgba(94, 165, 255, 0.7);
+        }
+
+        @keyframes heartBeat {
+            0% { transform: rotate(-45deg) scale(0.95); opacity: 0.7; }
+            35% { transform: rotate(-45deg) scale(1.05); opacity: 1; }
+            70% { transform: rotate(-45deg) scale(0.97); opacity: 0.85; }
+            100% { transform: rotate(-45deg) scale(0.95); opacity: 0.7; }
         }
 
         .page-wrap {
@@ -156,11 +193,11 @@
             backdrop-filter: blur(18px);
             background: linear-gradient(
                 to bottom,
-                rgba(255, 255, 255, 0.95),
-                rgba(255, 255, 255, 0.9),
+                rgba(248, 250, 255, 0.95),
+                rgba(248, 250, 255, 0.9),
                 transparent
             );
-            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            border-bottom: 1px solid rgba(15, 23, 42, 0.04);
         }
 
         body.dark header {
@@ -202,7 +239,7 @@
 
         .brand-tagline {
             font-size: 0.7rem;
-            opacity: 0.8;
+            opacity: 0.78;
             letter-spacing: 0.16em;
             text-transform: uppercase;
         }
@@ -235,7 +272,7 @@
             width: 46px;
             height: 22px;
             border-radius: 999px;
-            border: 1px solid rgba(125, 140, 170, 0.7);
+            border: 1px solid rgba(148, 163, 184, 0.8);
             position: relative;
             cursor: pointer;
             padding: 2px;
@@ -247,13 +284,13 @@
         }
 
         body.dark .theme-toggle {
-            border-color: rgba(180, 200, 240, 0.8);
+            border-color: rgba(191, 219, 254, 0.9);
         }
 
         .theme-toggle span {
             flex: 1;
             text-align: center;
-            opacity: 0.6;
+            opacity: 0.65;
         }
 
         .theme-toggle-thumb {
@@ -277,16 +314,15 @@
             width: 36px;
             height: 30px;
             border-radius: 999px;
-            border: 1px solid rgba(125, 140, 170, 0.7);
+            border: 1px solid rgba(148, 163, 184, 0.8);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
         }
 
         body.dark .hamburger {
-            border-color: rgba(180, 200, 240, 0.8);
+            border-color: rgba(191, 219, 254, 0.9);
         }
 
         .hamburger span {
@@ -295,8 +331,6 @@
             height: 1.7px;
             border-radius: 999px;
             background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
-            box-shadow: 0 0 6px rgba(94, 165, 255, 0.5);
-            transition: transform var(--transition-fast), opacity var(--transition-fast);
         }
 
         .hamburger span::before,
@@ -308,8 +342,6 @@
             height: 1.7px;
             border-radius: 999px;
             background: inherit;
-            box-shadow: inherit;
-            transition: transform var(--transition-fast);
         }
 
         .hamburger span::before { transform: translateY(-5px); }
@@ -326,9 +358,9 @@
             border-radius: 16px;
             padding: 0.35rem 0.25rem;
             backdrop-filter: blur(18px);
-            background: rgba(246, 249, 255, 0.96);
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12);
+            background: rgba(248, 250, 255, 0.97);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            box-shadow: 0 18px 36px rgba(15, 23, 42, 0.12);
             list-style: none;
             transform-origin: top right;
             transform: scale(0.94) translateY(-6px);
@@ -338,8 +370,8 @@
         }
 
         body.dark .hamburger-menu {
-            background: rgba(8, 11, 24, 0.97);
-            border-color: rgba(94, 165, 255, 0.45);
+            background: rgba(15, 23, 42, 0.96);
+            border-color: var(--border-soft-blue);
             box-shadow: var(--shadow-neon-soft);
         }
 
@@ -363,7 +395,6 @@
             font-size: 0.86rem;
             cursor: pointer;
             gap: 0.6rem;
-            transition: background var(--transition-fast), transform var(--transition-fast);
         }
 
         .hamburger-menu button span:first-child {
@@ -378,18 +409,9 @@
             opacity: 0.75;
         }
 
-        .hamburger-menu button:hover {
-            background: radial-gradient(circle at left, rgba(94, 165, 255, 0.18), transparent);
-            transform: translateX(-1px);
-        }
-
-        body.dark .hamburger-menu button:hover {
-            background: radial-gradient(circle at left, rgba(94, 165, 255, 0.25), transparent);
-        }
-
         main { flex: 1; }
 
-        /* GENERIC CARDS */
+        /* CARDS */
         section { margin-top: 2.8rem; }
 
         .section-card {
@@ -397,14 +419,16 @@
             padding: 1.2rem 1.1rem 1.3rem;
             background: var(--glass-light);
             backdrop-filter: blur(18px);
-            border: 1px solid rgba(0, 0, 0, 0.04);
-            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-soft-gray);
+            box-shadow: 0 16px 30px rgba(15, 23, 42, 0.16);
+            color: var(--text-dark);
         }
 
         body.dark .section-card {
             background: var(--glass-dark);
             border-color: var(--border-soft-blue);
             box-shadow: var(--shadow-neon-soft);
+            color: var(--text-light);
         }
 
         .section-header {
@@ -419,12 +443,12 @@
             font-size: 0.88rem;
             letter-spacing: 0.16em;
             text-transform: uppercase;
-            opacity: 0.9;
+            opacity: 0.95;
         }
 
         .section-subtitle {
             font-size: 0.83rem;
-            opacity: 0.75;
+            opacity: 0.8;
         }
 
         @media (max-width: 640px) {
@@ -441,25 +465,23 @@
         }
 
         @media (max-width: 860px) {
-            .hero {
-                grid-template-columns: 1fr;
-                padding-top: 1.6rem;
-            }
+            .hero { grid-template-columns: 1fr; padding-top: 1.6rem; }
         }
 
         .hero-card {
             border-radius: 20px;
             padding: 1.2rem 1.1rem 1.3rem;
             background: var(--glass-light);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 18px 34px rgba(0, 0, 0, 0.12);
+            border: 1px solid var(--border-soft-gray);
+            box-shadow: 0 18px 34px rgba(15, 23, 42, 0.16);
+            color: var(--text-dark);
         }
 
         body.dark .hero-card {
             background: var(--glass-dark);
             border-color: var(--border-soft-blue);
             box-shadow: var(--shadow-neon-soft);
+            color: var(--text-light);
         }
 
         .hero-kicker {
@@ -496,7 +518,7 @@
 
         .hero-location {
             font-size: 0.79rem;
-            opacity: 0.8;
+            opacity: 0.83;
             margin-bottom: 1.05rem;
             display: inline-flex;
             align-items: center;
@@ -517,13 +539,15 @@
             gap: 0.6rem;
             padding: 0.4rem 0.7rem;
             border-radius: 999px;
-            border: 1px solid rgba(125, 140, 170, 0.7);
+            border: 1px solid rgba(148, 163, 184, 0.75);
             margin-bottom: 1rem;
             font-size: 0.77rem;
+            background: rgba(248, 250, 255, 0.9);
         }
 
         body.dark .hero-highlight-strip {
-            border-color: rgba(180, 200, 240, 0.8);
+            border-color: rgba(191, 219, 254, 0.9);
+            background: rgba(15, 23, 42, 0.9);
         }
 
         .pulse-dot {
@@ -589,11 +613,11 @@
         .btn-ghost {
             background: transparent;
             border-radius: 999px;
-            border: 1px solid rgba(125, 140, 170, 0.7);
+            border: 1px solid rgba(148, 163, 184, 0.8);
         }
 
         body.dark .btn-ghost {
-            border-color: rgba(180, 200, 240, 0.8);
+            border-color: rgba(191, 219, 254, 0.9);
         }
 
         .btn-ghost:hover {
@@ -623,14 +647,14 @@
             flex-wrap: wrap;
         }
 
-        /* ICON PILL + COLORLESS ICONS */
+        /* ICON PILL + INLINE SVG ICONS */
         .icon-pill {
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
             padding: 0.26rem 0.75rem;
             border-radius: 999px;
-            border: 1px solid rgba(125, 140, 170, 0.7);
+            border: 1px solid rgba(148, 163, 184, 0.8);
             font-size: 0.78rem;
             cursor: pointer;
             opacity: 0.95;
@@ -641,31 +665,12 @@
                 color var(--transition-fast);
         }
 
-        body.dark .icon-pill { border-color: rgba(180, 200, 240, 0.8); }
+        body.dark .icon-pill { border-color: rgba(191, 219, 254, 0.9); }
 
-        .icon-shape {
+        .icon-svg {
             width: 18px;
             height: 18px;
-            border-radius: 4px;
-            border: 1px solid rgba(180, 200, 240, 0.9);
-            position: relative;
             display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            font-size: 0.78rem;
-            color: #f5f7ff;
-            background: rgba(20, 26, 45, 0.9);
-        }
-
-        body:not(.dark) .icon-shape {
-            color: #222;
-            background: rgba(247, 248, 255, 0.95);
-            border-color: rgba(120, 135, 165, 0.85);
-        }
-
-        .icon-shape::before {
-            content: attr(data-icon);
         }
 
         .icon-pill:hover {
@@ -685,16 +690,18 @@
             border-radius: 18px;
             padding: 0.7rem;
             background: var(--glass-light);
-            border: 1px solid rgba(0, 0, 0, 0.04);
-            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.14);
+            border: 1px solid var(--border-soft-gray);
+            box-shadow: 0 16px 30px rgba(15, 23, 42, 0.18);
             max-width: 260px;
             width: 100%;
+            color: var(--text-dark);
         }
 
         body.dark .glass-shell {
-            background: rgba(7, 10, 22, 0.85);
+            background: var(--glass-dark);
             border-color: var(--border-soft-blue);
             box-shadow: var(--shadow-neon-soft);
+            color: var(--text-light);
         }
 
         .glass-inner {
@@ -750,8 +757,8 @@
         .card-status-pill {
             border-radius: 999px;
             padding: 0.33rem 0.65rem;
-            background: rgba(248, 249, 255, 0.9);
-            border: 1px solid rgba(125, 140, 170, 0.7);
+            background: rgba(248, 250, 255, 0.96);
+            border: 1px solid rgba(148, 163, 184, 0.8);
             display: inline-flex;
             align-items: center;
             gap: 0.35rem;
@@ -760,8 +767,8 @@
         }
 
         body.dark .card-status-pill {
-            background: rgba(11, 16, 32, 0.96);
-            border-color: rgba(180, 200, 240, 0.8);
+            background: rgba(15, 23, 42, 0.96);
+            border-color: rgba(191, 219, 254, 0.9);
         }
 
         .card-status-pill .dot {
@@ -771,8 +778,7 @@
             background: var(--accent-green);
         }
 
-        /* ABOUT, EDUCATION, PROJECTS, SOCIAL, CONTACT, TALK (layout from previous version, visually tuned) */
-
+        /* ABOUT */
         .about-grid {
             display: grid;
             grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.3fr);
@@ -786,7 +792,7 @@
         .about-text {
             font-size: 0.9rem;
             line-height: 1.7;
-            opacity: 0.9;
+            opacity: 0.95;
         }
 
         .about-text strong { font-weight: 600; }
@@ -801,12 +807,12 @@
         .tag {
             border-radius: 999px;
             padding: 0.22rem 0.55rem;
-            border: 1px dashed rgba(125, 140, 170, 0.7);
+            border: 1px dashed rgba(148, 163, 184, 0.85);
             font-size: 0.73rem;
-            opacity: 0.9;
+            opacity: 0.95;
         }
 
-        body.dark .tag { border-color: rgba(180, 200, 240, 0.8); }
+        body.dark .tag { border-color: rgba(191, 219, 254, 0.9); }
 
         .highlight-card {
             border-radius: 16px;
@@ -843,7 +849,7 @@
             border-radius: 999px;
             padding: 0.25rem 0.55rem;
             background: rgba(252, 253, 255, 0.95);
-            border: 1px solid rgba(125, 140, 170, 0.7);
+            border: 1px solid rgba(148, 163, 184, 0.7);
             font-size: 0.72rem;
         }
 
@@ -852,13 +858,14 @@
             border-color: rgba(180, 200, 240, 0.8);
         }
 
+        /* slider */
         .slider-wrap { margin-top: 1rem; }
 
         .slider-track {
             position: relative;
             overflow: hidden;
             border-radius: 12px;
-            border: 1px solid rgba(125, 140, 170, 0.7);
+            border: 1px solid rgba(148, 163, 184, 0.7);
             padding: 0.6rem 0.7rem;
         }
 
@@ -909,6 +916,7 @@
             transform: scale(1.25);
         }
 
+        /* EDU */
         .two-col-grid {
             display: grid;
             grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.1fr);
@@ -966,7 +974,7 @@
             border-radius: 999px;
             padding: 0.16rem 0.5rem;
             font-size: 0.7rem;
-            border: 1px solid rgba(125, 140, 170, 0.7);
+            border: 1px solid rgba(148, 163, 184, 0.7);
             opacity: 0.9;
         }
 
@@ -996,7 +1004,7 @@
         .cert-title { font-weight: 500; }
         .cert-meta { font-size: 0.74rem; opacity: 0.75; text-align: right; }
 
-        /* PROJECTS GRID WITH HOVER POPUP */
+        /* PROJECTS GRID WITH HOVER POPUPS */
         .three-card-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1015,7 +1023,7 @@
             position: relative;
             border-radius: 15px;
             padding: 0.8rem 0.85rem;
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.74);
             border: 1px solid rgba(0, 0, 0, 0.04);
             font-size: 0.82rem;
             overflow: hidden;
@@ -1027,7 +1035,7 @@
 
         body.dark .mini-card {
             background: rgba(8, 11, 24, 0.9);
-            border-color: rgba(94, 165, 255, 0.3);
+            border-color: rgba(94, 165, 255, 0.28);
         }
 
         .mini-title { font-size: 0.84rem; font-weight: 600; margin-bottom: 0.2rem; }
@@ -1037,7 +1045,7 @@
         .mini-popup {
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at top, rgba(255, 255, 255, 0.86), transparent 70%);
+            background: radial-gradient(circle at top, rgba(255, 255, 255, 0.9), transparent 70%);
             display: flex;
             align-items: flex-end;
             justify-content: flex-start;
@@ -1066,7 +1074,7 @@
             opacity: 1;
         }
 
-        /* SOCIAL CARDS (hover popup same style) */
+        /* SOCIAL CARDS */
         .social-card-grid {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1121,7 +1129,7 @@
 
         .social-mini-btn {
             border-radius: 999px;
-            border: 1px solid rgba(125, 140, 170, 0.7);
+            border: 1px solid rgba(148, 163, 184, 0.8);
             padding: 0.2rem 0.6rem;
             font-size: 0.72rem;
             background: transparent;
@@ -1130,7 +1138,7 @@
             transition: background var(--transition-fast), transform var(--transition-fast);
         }
 
-        body.dark .social-mini-btn { border-color: rgba(180, 200, 240, 0.8); }
+        body.dark .social-mini-btn { border-color: rgba(191, 219, 254, 0.9); }
 
         .social-mini-btn:hover {
             background: rgba(94, 165, 255, 0.16);
@@ -1169,7 +1177,7 @@
             opacity: 1;
         }
 
-        /* CONTACT (only WhatsApp & Gmail icons) */
+        /* CONTACT */
         .contact-grid {
             display: grid;
             grid-template-columns: minmax(0, 1.25fr) minmax(0, 1.1fr);
@@ -1221,7 +1229,7 @@
         .contact-actions button {
             border-radius: 999px;
             padding: 0.4rem 0.85rem;
-            border: 1px solid rgba(125, 140, 170, 0.7);
+            border: 1px solid rgba(148, 163, 184, 0.8);
             background: transparent;
             color: inherit;
             font-size: 0.8rem;
@@ -1235,7 +1243,7 @@
                 border-color var(--transition-fast);
         }
 
-        body.dark .contact-actions button { border-color: rgba(180, 200, 240, 0.8); }
+        body.dark .contact-actions button { border-color: rgba(191, 219, 254, 0.9); }
 
         .contact-actions button:hover {
             background: rgba(94, 165, 255, 0.16);
@@ -1272,7 +1280,7 @@
         .field-input,
         .field-textarea {
             border-radius: 9px;
-            border: 1px solid rgba(125, 140, 170, 0.7);
+            border: 1px solid rgba(148, 163, 184, 0.8);
             background: rgba(255, 255, 255, 0.95);
             color: inherit;
             padding: 0.42rem 0.55rem;
@@ -1292,7 +1300,7 @@
         body.dark .field-input,
         body.dark .field-textarea {
             background: rgba(7, 10, 22, 0.95);
-            border-color: rgba(180, 200, 240, 0.8);
+            border-color: rgba(191, 219, 254, 0.9);
         }
 
         .field-input:focus,
@@ -1310,7 +1318,7 @@
         footer {
             margin-top: 3rem;
             font-size: 0.75rem;
-            opacity: 0.8;
+            opacity: 0.85;
             text-align: center;
         }
 
@@ -1377,7 +1385,7 @@
             border-radius: 999px;
             padding: 0.35rem 0.75rem;
             font-size: 0.75rem;
-            border: 1px solid rgba(180, 200, 240, 0.8);
+            border: 1px solid rgba(191, 219, 254, 0.9);
             background: transparent;
             color: inherit;
             cursor: pointer;
@@ -1389,6 +1397,58 @@
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
             color: #050711;
             border: none;
+        }
+
+        /* WELCOME OVERLAY */
+        .welcome-overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at top, rgba(255, 255, 255, 0.96), rgba(211, 219, 241, 0.98));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 90;
+            opacity: 1;
+            pointer-events: auto;
+            transition: opacity 0.9s ease-out;
+        }
+
+        body.dark .welcome-overlay {
+            background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), rgba(5, 7, 16, 0.98));
+        }
+
+        .welcome-inner {
+            text-align: center;
+            max-width: 480px;
+            padding: 1rem;
+            color: var(--text-dark);
+        }
+
+        body.dark .welcome-inner { color: var(--text-light); }
+
+        .welcome-arabic {
+            font-size: 1.4rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .welcome-english {
+            font-size: 0.9rem;
+            opacity: 0.85;
+        }
+
+        .welcome-inner {
+            animation: welcomePop 1.3s ease-out;
+        }
+
+        @keyframes welcomePop {
+            0% { transform: scale(0.9); opacity: 0; }
+            60% { transform: scale(1.02); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .welcome-overlay.hide {
+            opacity: 0;
+            pointer-events: none;
         }
 
         /* FADE-IN */
@@ -1409,14 +1469,30 @@
 
         @media (max-width: 600px) {
             .hero { gap: 1.4rem; }
+            .header-inner { padding-inline: 1rem; }
+            .page-wrap { padding-inline: 1rem; }
         }
     </style>
 </head>
 <body class="light">
 <div class="bg-layer"></div>
-<div class="bg-spotlight" id="bgSpotlight"></div>
 <div class="bg-watermark">
     <div class="watermark-text">FOREVER KNIGHTS</div>
+</div>
+<div class="bg-heart">
+    <div class="heart-core"></div>
+</div>
+
+<!-- WELCOME OVERLAY -->
+<div class="welcome-overlay" id="welcomeOverlay">
+    <div class="welcome-inner">
+        <div class="welcome-arabic">
+            اَلسَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ
+        </div>
+        <div class="welcome-english">
+            May peace, mercy, and blessings of Allah be upon you.
+        </div>
+    </div>
 </div>
 
 <header>
@@ -1490,19 +1566,42 @@
                     <span class="label">SOCIAL</span>
                     <div class="hero-socials">
                         <button class="icon-pill" data-contact="twitter">
-                            <div class="icon-shape" data-icon="𝕏"></div>
+                            <span class="icon-svg">
+                                <!-- X SVG -->
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 4l16 16M20 4L4 20" />
+                                </svg>
+                            </span>
                             <span>X</span>
                         </button>
                         <button class="icon-pill" data-contact="instagram">
-                            <div class="icon-shape" data-icon="IG"></div>
+                            <span class="icon-svg">
+                                <!-- Instagram SVG -->
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                    <rect x="4" y="4" width="16" height="16" rx="4"></rect>
+                                    <circle cx="12" cy="12" r="3.5"></circle>
+                                    <circle cx="17" cy="7" r="0.9" fill="currentColor"></circle>
+                                </svg>
+                            </span>
                             <span>Instagram</span>
                         </button>
                         <button class="icon-pill" data-contact="facebook">
-                            <div class="icon-shape" data-icon="f"></div>
+                            <span class="icon-svg">
+                                <!-- Facebook SVG -->
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                    <path d="M14 8h2V4h-2a4 4 0 0 0-4 4v2H8v4h2v6h4v-6h2l1-4h-3V8a1 1 0 0 1 1-1z" />
+                                </svg>
+                            </span>
                             <span>Facebook</span>
                         </button>
                         <button class="icon-pill" data-contact="snapchat">
-                            <div class="icon-shape" data-icon="👻"></div>
+                            <span class="icon-svg">
+                                <!-- Snapchat SVG-ish ghost -->
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M8 9a4 4 0 0 1 8 0v4c0 1.6-1.1 3.3-2.9 3.8L12 18l-1.1-0.2A4 4 0 0 1 8 13V9z"/>
+                                    <path d="M6 17c1.2.4 1.6 1.6 3.3 1.6 1.2 0 1.7-.6 2.7-.6s1.5.6 2.7.6c1.7 0 2.1-1.2 3.3-1.6" />
+                                </svg>
+                            </span>
                             <span>Snapchat</span>
                         </button>
                     </div>
@@ -1793,7 +1892,11 @@
                 <div class="social-card-grid">
                     <div class="social-card-mini">
                         <div class="social-card-header">
-                            <div class="icon-shape" data-icon="𝕏"></div>
+                            <span class="icon-svg">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 4l16 16M20 4L4 20" />
+                                </svg>
+                            </span>
                             <div>
                                 <div class="social-card-name">X (Twitter)</div>
                                 <div class="social-card-handle">@PATRIOT_SPIRIT0</div>
@@ -1812,7 +1915,13 @@
 
                     <div class="social-card-mini">
                         <div class="social-card-header">
-                            <div class="icon-shape" data-icon="IG"></div>
+                            <span class="icon-svg">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                    <rect x="4" y="4" width="16" height="16" rx="4"></rect>
+                                    <circle cx="12" cy="12" r="3.5"></circle>
+                                    <circle cx="17" cy="7" r="0.9" fill="currentColor"></circle>
+                                </svg>
+                            </span>
                             <div>
                                 <div class="social-card-name">Instagram</div>
                                 <div class="social-card-handle">@ayanovaic</div>
@@ -1831,7 +1940,11 @@
 
                     <div class="social-card-mini">
                         <div class="social-card-header">
-                            <div class="icon-shape" data-icon="f"></div>
+                            <span class="icon-svg">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                    <path d="M14 8h2V4h-2a4 4 0 0 0-4 4v2H8v4h2v6h4v-6h2l1-4h-3V8a1 1 0 0 1 1-1z" />
+                                </svg>
+                            </span>
                             <div>
                                 <div class="social-card-name">Facebook</div>
                             </div>
@@ -1849,7 +1962,12 @@
 
                     <div class="social-card-mini">
                         <div class="social-card-header">
-                            <div class="icon-shape" data-icon="👻"></div>
+                            <span class="icon-svg">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M8 9a4 4 0 0 1 8 0v4c0 1.6-1.1 3.3-2.9 3.8L12 18l-1.1-0.2A4 4 0 0 1 8 13V9z"/>
+                                    <path d="M6 17c1.2.4 1.6 1.6 3.3 1.6 1.2 0 1.7-.6 2.7-.6s1.5.6 2.7.6c1.7 0 2.1-1.2 3.3-1.6" />
+                                </svg>
+                            </span>
                             <div>
                                 <div class="social-card-name">Snapchat</div>
                                 <div class="social-card-handle">ion.ayan</div>
@@ -1896,11 +2014,23 @@
 
                         <div class="contact-actions">
                             <button data-contact="whatsapp">
-                                <div class="icon-shape" data-icon="WA"></div>
+                                <span class="icon-svg">
+                                    <!-- WhatsApp SVG -->
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                        <path d="M5 19l1.2-3.4A7 7 0 1 1 19 12a7 7 0 0 1-9.8 6.2L5 19z"/>
+                                        <path d="M10.5 8.8c-.2-.4-.3-.4-.6-.4h-.4c-.2 0-.4.1-.5.3-.1.2-.7.6-.7 1.5 0 .9.7 1.8.8 1.9.1.2 1.5 2.4 3.7 3.3 1.8.7 2.2.6 2.6.5.4-.1 1.3-.5 1.4-1s.2-.9.1-1c-.1-.2-.2-.2-.5-.3l-1.4-.7c-.2-.1-.4-.1-.5.1l-.4.5c-.1.1-.2.1-.4 0-.2-.1-.9-.3-1.7-1.1-.6-.5-1-1.2-1.1-1.4-.1-.2 0-.3.1-.4l.3-.3c.1-.1.1-.2.2-.3l-.7-1.3z"/>
+                                    </svg>
+                                </span>
                                 <span>WhatsApp</span>
                             </button>
                             <button data-contact="email">
-                                <div class="icon-shape" data-icon="✉"></div>
+                                <span class="icon-svg">
+                                    <!-- Gmail style envelope -->
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                                        <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                                        <path d="M4 7l8 6 8-6" />
+                                    </svg>
+                                </span>
                                 <span>Gmail</span>
                             </button>
                         </div>
@@ -1961,7 +2091,7 @@
     </main>
 
     <footer>
-        © <span id="yearSpan"></span> Ayan · Built in light neon blue, gray, and Forever Knights style.
+        © <span id="yearSpan"></span> Ayan · Built in light neon gray and blue with Forever Knights energy.
     </footer>
 </div>
 
@@ -1979,13 +2109,14 @@
 </div>
 
 <script>
-    // Spotlight follow mouse
-    var bgSpotlight = document.getElementById("bgSpotlight");
-    window.addEventListener("mousemove", function (e) {
-        var x = e.clientX - 210;
-        var y = e.clientY - 210;
-        bgSpotlight.style.transform = "translate3d(" + x + "px," + y + "px,0)";
-    });
+    // Welcome overlay
+    var welcomeOverlay = document.getElementById("welcomeOverlay");
+    setTimeout(function () {
+        welcomeOverlay.classList.add("hide");
+        setTimeout(function () {
+            welcomeOverlay.style.display = "none";
+        }, 1000);
+    }, 2200);
 
     // Smooth scroll
     document.querySelectorAll("[data-scroll]").forEach(function (btn) {
@@ -2091,7 +2222,7 @@
             "<strong>Hint:</strong> It’s three words, simple and honest.<br><br>" +
             "<input id='passwordInput' type='password' " +
             "style='width:100%;margin-top:0.35rem;border-radius:8px;padding:0.35rem 0.5rem;" +
-            "border:1px solid rgba(180,200,240,0.9);background:#050711;color:#fdfdff;'>",
+            "border:1px solid rgba(191,219,254,0.9);background:#050711;color:#fdfdff;'>",
             [
                 { label: "Cancel", onClick: function () { modalBackdrop.classList.remove("show"); } },
                 {
@@ -2233,9 +2364,13 @@
     // Let’s talk – connect now
     var connectNowBtn = document.getElementById("connectNowBtn");
     connectNowBtn.addEventListener("click", function () {
-        var name = document.getElementById("talkName").value.trim();
-        var contact = document.getElementById("talkContact").value.trim();
-        var message = document.getElementById("talkMessage").value.trim();
+        var name = (document.getElementById("talkName") || {}).value || "";
+        var contact = (document.getElementById("talkContact") || {}).value || "";
+        var message = (document.getElementById("talkMessage") || {}).value || "";
+
+        name = name.trim();
+        contact = contact.trim();
+        message = message.trim();
 
         var subject = encodeURIComponent("Let’s connect | From your portfolio");
         var bodyLines = [];
