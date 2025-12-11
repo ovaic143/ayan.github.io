@@ -2,522 +2,317 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ayan — Practical Tinkerer</title>
-
-  <!-- Google Fonts -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ayan — Personal Website</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%A%3C/text%3E%3C/svg%3E">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-
-  <meta name="description" content="Ayan — hardware, networking and IoT projects.">
-
   <style>
-    /* ---------------------------
-       Variables & Base
-       --------------------------- */
     :root{
-      --bg-0: #0f1724;
-      --bg-1: linear-gradient(135deg,#07102a 0%, #072644 45%, #0a2b3a 100%);
-      --card: rgba(255,255,255,0.04);
-      --muted: rgba(255,255,255,0.65);
-      --accent-a: #7c3aed;
-      --accent-b: #06b6d4;
-      --glass: rgba(255,255,255,0.04);
-      --radius: 14px;
+      --bg:#05060a;
+      --neon:#00f6ff;
+      --neon2:#ff00e0;
+      --card:#071127;
+      --glass: rgba(255,255,255,0.03);
+      --accent: linear-gradient(90deg,var(--neon),var(--neon2));
     }
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: var(--bg-1);
-      color: #E6F0FF;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.45;
-      -webkit-tap-highlight-color: transparent;
-    }
-    a{color:inherit;text-decoration:none}
-    .container{max-width:1100px;margin:0 auto;padding:28px 20px;}
+    *{box-sizing:border-box}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial; margin:0; background:radial-gradient(1200px 600px at 10% 10%, rgba(0,246,255,0.03), transparent), radial-gradient(900px 400px at 90% 90%, rgba(255,0,224,0.03), transparent), var(--bg); color:#dfecff; -webkit-font-smoothing:antialiased}
 
-    /* ---------------------------
-       Floating 3-line hamburger
-       --------------------------- */
-    .hamburger {
-      position: fixed;
-      right: 20px;
-      top: 18px;
-      z-index: 60;
-      width:56px;
-      height:56px;
-      border-radius:12px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-      border:1px solid rgba(255,255,255,0.04);
-      backdrop-filter: blur(6px);
-      box-shadow: 0 6px 20px rgba(3,7,18,0.6);
-    }
-    .hamburger button{
-      all:unset;
-      width:40px;height:40px;cursor:pointer;display:inline-block;position:relative;
-    }
-    .bar{
-      position:absolute;left:6px;right:6px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));
-      transition: transform .32s cubic-bezier(.2,.9,.2,1), opacity .2s;
-      transform-origin:center;
-    }
-    .bar.b1{top:9px}
-    .bar.b2{top:18.5px}
-    .bar.b3{top:28px}
-    .hamburger.open .b1{transform: translateY(9.5px) rotate(45deg)}
-    .hamburger.open .b2{opacity:0;transform:scale(0.8)}
-    .hamburger.open .b3{transform: translateY(-9.5px) rotate(-45deg)}
+    /* header */
+    header{position:fixed;top:0;left:0;right:0;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;backdrop-filter: blur(6px);z-index:40}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:52px;height:52px;border-radius:12px;display:inline-grid;place-items:center;background:linear-gradient(135deg, rgba(0,246,255,0.12), rgba(255,0,224,0.08));box-shadow:0 6px 18px rgba(0,0,0,0.6),0 0 18px rgba(0,246,255,0.06)}
+    .logo svg{filter:drop-shadow(0 6px 18px rgba(0,246,255,0.15));}
+    .name{font-weight:800;font-size:18px;letter-spacing:0.6px;color:transparent;background:var(--accent);-webkit-background-clip:text;background-clip:text}
 
-    /* Dropdown menu */
-    .menu-panel{
-      position: fixed;
-      right: 20px;
-      top: 86px;
-      width:260px;
-      border-radius:14px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border: 1px solid rgba(255,255,255,0.04);
-      padding:8px;
-      box-shadow: 0 10px 30px rgba(2,5,12,0.6);
-      transform-origin: top right;
-      transition: transform .24s ease, opacity .2s ease;
-      opacity: 0; pointer-events:none; transform: translateY(-6px) scale(.98);
-      z-index:55;
-    }
-    .menu-panel.open{opacity:1;pointer-events:auto;transform:translateY(0) scale(1)}
+    /* header icons only (no text) */
+    .header-icons{display:flex;gap:10px;align-items:center}
+    .icon-btn{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:var(--glass);cursor:pointer;border:1px solid rgba(255,255,255,0.03)}
+    .icon-btn svg{width:20px;height:20px;filter:drop-shadow(0 2px 8px rgba(0,246,255,0.08));}
 
-    .menu-item{display:block;padding:12px 14px;border-radius:10px;font-weight:600;color:var(--muted);margin:6px 4px; font-size:14px}
-    .menu-item:hover{background:rgba(255,255,255,0.02);color:#fff}
+    /* hamburger */
+    .hamburger{display:inline-grid;place-items:center; width:48px;height:48px;border-radius:10px;background:transparent;border:0;cursor:pointer}
+    .hamburger .lines{width:22px;height:2px;background:linear-gradient(90deg,var(--neon),var(--neon2));position:relative;display:block;border-radius:2px}
+    .hamburger .lines::before,.hamburger .lines::after{content:'';position:absolute;left:0;right:0;height:2px;border-radius:2px;background:inherit}
+    .hamburger .lines::before{top:-6px}
+    .hamburger .lines::after{bottom:-6px}
 
-    /* ---------------------------
-       Hero
-       --------------------------- */
-    .hero{display:grid;grid-template-columns:1fr;gap:22px;align-items:center;padding:24px 0}
-    @media(min-width:900px){ .hero{grid-template-columns:1fr 420px;gap:36px} }
+    /* layout */
+    main{padding-top:90px;display:grid;grid-template-columns:1fr 380px;gap:28px;max-width:1200px;margin:0 auto;padding-bottom:120px}
+    @media (max-width:980px){main{grid-template-columns:1fr;padding:20px}}
 
-    .badge{
-      display:inline-block;padding:8px 12px;border-radius:999px;background:linear-gradient(90deg, rgba(124,58,237,0.12), rgba(6,182,212,0.06));
-      color:var(--accent-a);font-weight:600;font-size:13px;
-      border: 1px solid rgba(124,58,237,0.12);
-    }
+    /* left column */
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:16px;padding:26px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+    .hero{display:flex;gap:22px;align-items:center}
+    .avatar{width:130px;height:130px;border-radius:16px;overflow:hidden;flex-shrink:0;border:2px solid rgba(255,255,255,0.04);box-shadow:0 12px 40px rgba(18,18,30,0.6)}
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    .intro h1{margin:0;font-size:28px}
+    .intro p{margin:6px 0 0;color:#b6d9ff}
 
-    h1{font-size:28px;margin:6px 0;line-height:1.02;font-weight:800}
-    @media(min-width:900px){h1{font-size:40px}}
+    /* neon skill badges */
+    .skills{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+    .skill{padding:8px 12px;border-radius:999px;font-weight:600;background:linear-gradient(90deg, rgba(0,246,255,0.04), rgba(255,0,224,0.03));border:1px solid rgba(255,255,255,0.03);box-shadow:0 8px 30px rgba(0,246,255,0.02);}
 
-    p.lead{color:var(--muted);max-width:58ch;margin:8px 0 0 0;font-size:15px}
+    /* sections */
+    h2.section-title{font-size:16px;margin:10px 0 12px;color:var(--neon);text-transform:uppercase;letter-spacing:1.2px}
+    .summary{line-height:1.55;color:#cfe9ff}
+    .projects .proj{padding:12px;border-radius:12px;margin-bottom:10px;background:linear-gradient(180deg, rgba(0,0,0,0.15), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.02)}
 
-    .cta-row{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
-    .btn{
-      display:inline-flex;align-items:center;gap:10px;padding:11px 16px;border-radius:12px;font-weight:700;cursor:pointer;
-      transition: transform .15s ease, box-shadow .15s ease;
-      border: none;
-    }
-    .btn-primary{
-      background: linear-gradient(90deg,var(--accent-a),var(--accent-b));
-      color: white; box-shadow: 0 8px 30px rgba(7,12,34,0.5);
-    }
-    .btn-primary:active{transform:translateY(1px)}
-    .btn-ghost{
-      background: transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04);
-    }
+    /* contact */
+    .contact-list{display:flex;flex-direction:column;gap:10px}
+    .contact-item{display:flex;gap:12px;align-items:center;padding:10px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid rgba(255,255,255,0.02)}
+    .contact-item .ci-left{width:44px;height:44px;border-radius:8px;display:grid;place-items:center;background:linear-gradient(135deg, rgba(0,0,0,0.08), rgba(255,255,255,0.02))}
+    .contact-item .ci-right{font-weight:600}
 
-    .socials{display:flex;gap:10px;margin-top:10px}
-    .social-pill{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.02);font-size:13px;color:var(--muted)}
+    /* social row */
+    .social-row{display:flex;gap:10px;margin-top:8px}
+    .social-row a{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.03)}
 
-    /* Device card */
-    .device-card{
-      border-radius:var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      padding:18px;border:1px solid rgba(255,255,255,0.04);
-      box-shadow: 0 20px 40px rgba(2,6,20,0.6);
-    }
-    .device-mock{width:100%;height:220px;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#eaf6ff08,#ffffff04);}
+    /* interactive / animations */
+    .glow{animation:glow 2.8s ease-in-out infinite}
+    @keyframes glow{0%{filter:drop-shadow(0 0 6px rgba(0,246,255,0.06))}50%{filter:drop-shadow(0 0 18px rgba(255,0,224,0.08))}100%{filter:drop-shadow(0 0 6px rgba(0,246,255,0.06))}}
 
-    /* ---------------------------
-       Skills & Projects
-       --------------------------- */
-    .grid{display:grid;gap:14px}
-    .skills-grid{grid-template-columns:repeat(2,1fr)}
-    @media(min-width:640px){.skills-grid{grid-template-columns:repeat(3,1fr)}}
-    @media(min-width:900px){.skills-grid{grid-template-columns:repeat(6,1fr)}}
+    /* animated circuit svg area */
+    .circuit-wrap{height:220px;border-radius:12px;overflow:hidden;margin-top:18px;background:linear-gradient(180deg, rgba(0,0,0,0.12), rgba(255,255,255,0.01));display:flex;align-items:center;justify-content:center}
+    .circuit svg{width:100%;height:100%}
+    .wire{stroke-dasharray:200;stroke-dashoffset:200;animation:dash 4s linear infinite}
+    @keyframes dash{to{stroke-dashoffset:0}}
 
-    .skill-card{
-      padding:14px;border-radius:12px;background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
-      border:1px solid rgba(255,255,255,0.03);text-align:center;font-weight:600;
-      transition: transform .22s cubic-bezier(.2,.9,.2,1), box-shadow .22s;
-    }
-    .skill-card:hover{transform:translateY(-8px);box-shadow:0 10px 30px rgba(6,12,30,0.5)}
+    /* footer */
+    footer{max-width:1200px;margin:50px auto 80px;padding:18px;text-align:center;color:#9fbfe6}
 
-    .projects-grid{grid-template-columns:1fr}
-    @media(min-width:640px){.projects-grid{grid-template-columns:repeat(2,1fr)}}
-    @media(min-width:1100px){.projects-grid{grid-template-columns:repeat(3,1fr)}}
+    /* small screens */
+    @media (max-width:480px){.avatar{width:96px;height:96px}.intro h1{font-size:20px}}
 
-    .project{
-      padding:16px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.015));
-      border:1px solid rgba(255,255,255,0.03);transition:transform .22s;display:flex;flex-direction:column;gap:10px;
-    }
-    .project:hover{transform:translateY(-8px)}
+    /* utilities */
+    .btn{display:inline-block;padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;cursor:pointer}
 
-    .tags{display:flex;gap:8px;flex-wrap:wrap}
-    .tag{font-size:12px;padding:6px 8px;border-radius:999px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03)}
-
-    /* ---------------------------
-       Electronics SVG animation
-       --------------------------- */
-    .electronics{display:grid;grid-template-columns:1fr;gap:12px;align-items:center}
-    @media(min-width:900px){.electronics{grid-template-columns:440px 1fr}}
-
-    .circuit-wrap{padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
-    svg{width:100%;height:220px;display:block}
-
-    .led-core{fill:#ff9a3c;filter:drop-shadow(0 0 6px rgba(255,154,60,0.6))}
-    .led-glow{fill:rgba(255,154,60,0.10);animation:pulse 1.6s infinite ease-in-out}
-    @keyframes pulse{0%{transform:scale(1);opacity:.6}50%{transform:scale(1.15);opacity:1}100%{transform:scale(1);opacity:.6}}
-
-    /* electron (particle) */
-    .electron{fill:var(--accent-b);filter:drop-shadow(0 0 6px rgba(6,182,212,0.6))}
-
-    /* controls */
-    .controls{display:flex;gap:10px;margin-top:12px}
-
-    /* contact form */
-    .card{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
-    input, textarea{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit;resize:vertical}
-    .foot{margin-top:22px;text-align:center;color:var(--muted);font-size:13px}
-
-    /* small utilities */
-    .muted{color:var(--muted)}
-    .mb-8{margin-bottom:32px}
+    /* resume button neon */
+    .resume-btn{padding:12px 14px;border-radius:12px;background:transparent;border:1px solid rgba(255,255,255,0.06);box-shadow:0 8px 28px rgba(0,0,0,0.6)}
   </style>
 </head>
 <body>
-  <!-- Floating hamburger -->
-  <div id="hamb" class="hamburger" aria-hidden="false">
-    <button id="hambBtn" aria-label="Open menu" title="Menu" aria-expanded="false">
-      <span class="bar b1"></span>
-      <span class="bar b2"></span>
-      <span class="bar b3"></span>
-    </button>
-
-    <div id="menu" class="menu-panel" role="menu" aria-hidden="true">
-      <a class="menu-item" href="#about" role="menuitem">About</a>
-      <a class="menu-item" href="#skills" role="menuitem">Skills</a>
-      <a class="menu-item" href="#projects" role="menuitem">Projects</a>
-      <a class="menu-item" href="#electronics" role="menuitem">Electronics</a>
-      <a class="menu-item" href="#contact" role="menuitem">Contact</a>
-      <div style="height:1px;background:rgba(255,255,255,0.02);margin:8px;border-radius:6px"></div>
-      <button id="themeToggle" class="menu-item" style="background:transparent;border:none;text-align:left">Toggle Contrast</button>
+  <header>
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <!-- stylized A logo -->
+        <svg viewBox="0 0 100 100" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#00f6ff"/><stop offset="1" stop-color="#ff00e0"/></linearGradient>
+          </defs>
+          <rect width="100" height="100" rx="18" fill="none"/>
+          <path d="M18 78 L50 18 L82 78 Z" fill="none" stroke="url(#g1)" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M35 62 L65 62" stroke="url(#g1)" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="name">Ayan</div>
     </div>
-  </div>
 
-  <main class="container">
-    <!-- HERO -->
-    <section id="about" class="hero">
-      <div>
-        <span class="badge">Hi, I’m Ayan 👋</span>
-        <h1>Practical tinkerer — hardware, networking & IoT</h1>
-        <p class="lead">I create small, reliable experiments with microcontrollers, embedded sensors and networks. I prefer systems that are easy to explain and maintain.</p>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="header-icons" aria-hidden="false">
+        <!-- icons only in header -->
+        <button class="icon-btn" title="Phone" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">
+          <!-- phone icon -->
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 16.5v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.29 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.5 5.18 2 2 0 0 1 4.5 3h3a2 2 0 0 1 2 1.72c.12 1.2.36 2.36.7 3.45a2 2 0 0 1-.45 2.02L9.7 11.7c1.8 3.6 4.8 6.6 8.4 8.4l1.5-1.35a2 2 0 0 1 2.02-.45c1.09.34 2.25.58 3.45.7A2 2 0 0 1 21 16.5z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="icon-btn" title="Email" onclick="document.getElementById('contact-email').scrollIntoView({behavior:'smooth'})">
+          <!-- gmail icon -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6.5v11A2.5 2.5 0 0 0 5.5 20h13a2.5 2.5 0 0 0 2.5-2.5v-11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 6 L12 13 3 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </button>
+        <button class="icon-btn" title="Location" onclick="document.getElementById('contact-location').scrollIntoView({behavior:'smooth'})">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.5"/></svg>
+        </button>
+      </div>
 
-        <div class="cta-row">
-          <a class="btn btn-primary" href="#projects">View Projects</a>
-          <a class="btn btn-ghost" href="/resume.pdf" target="_blank" rel="noopener">Download Resume</a>
+      <button class="hamburger" aria-label="Open menu" onclick="toggleMenu(this)">
+        <span class="lines"></span>
+      </button>
+    </div>
+  </header>
+
+  <nav id="sideMenu" style="position:fixed;right:18px;top:78px;width:260px;max-width:85vw;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,0.03);display:none;z-index:60">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <strong style="letter-spacing:0.6px">Menu</strong>
+      <button class="btn" onclick="toggleMenu()">Close</button>
+    </div>
+    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
+      <li><a class="btn" href="#about">About</a></li>
+      <li><a class="btn" href="#skills">Skills</a></li>
+      <li><a class="btn" href="#projects">Projects</a></li>
+      <li><a class="btn" href="#hobbies">Hobbies</a></li>
+      <li><a class="btn" href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section class="card">
+      <div class="hero">
+        <div class="avatar">
+          <!-- image file: ayan.jpg (place in same folder) -->
+          <img src="ayan.jpg" alt="Ayan photo" />
         </div>
-
-        <div class="socials">
-          <a class="social-pill" href="#" aria-label="Instagram">Instagram</a>
-          <a class="social-pill" href="#" aria-label="X">X</a>
-          <a class="social-pill" href="#" aria-label="Telegram">Telegram</a>
+        <div class="intro">
+          <h1>Ayan</h1>
+          <p class="summary">Computer hardware & networking enthusiast. I design small microcontroller projects and love turning ideas into practical DIY tech.</p>
+          <div class="skills" id="skills">
+            <div class="skill">Computer Hardware Troubleshooting</div>
+            <div class="skill">Networking (LAN, Routers, WiFi, IoT)</div>
+            <div class="skill">Windows & Linux (Basic)</div>
+            <div class="skill">MS Office & Documentation</div>
+            <div class="skill">Typing & Stenography</div>
+            <div class="skill">Arduino & Microcontroller</div>
+            <div class="skill">Basic Programming Concepts</div>
+            <div class="skill">Internet Research & Digital Literacy</div>
+          </div>
         </div>
       </div>
 
-      <aside class="device-card">
-        <div class="device-mock" aria-hidden="true">
-          <!-- small animated svg showcase -->
-          <svg viewBox="0 0 200 140" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Animated electronic mockup">
+      <h2 class="section-title" id="about">About</h2>
+      <p class="summary">I am Ayan — I work with computers, networks and microcontrollers. I enjoy troubleshooting hardware, building Arduino projects and learning about IoT. I write documentation and work on practical DIY builds to improve everyday life.</p>
+
+      <h2 class="section-title" id="projects">Projects</h2>
+      <div class="projects">
+        <div class="proj">
+          <strong>Distance Detector Using Arduino UNO</strong>
+          <p style="margin:6px 0 0;color:#cfe9ff">Designed and programmed a working distance-measurement device using ultrasonic sensors and Arduino UNO. The device measures proximity and can trigger indicators or logging.</p>
+        </div>
+      </div>
+
+      <div class="circuit-wrap">
+        <div class="circuit" aria-hidden="true">
+          <!-- simple animated circuit illustration -->
+          <svg viewBox="0 0 800 220" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <linearGradient id="g1" x1="0" x2="1">
-                <stop offset="0%" stop-color="#eaf2ff"/>
-                <stop offset="100%" stop-color="#ffffff"/>
-              </linearGradient>
+              <linearGradient id="lg" x1="0" x2="1"><stop offset="0" stop-color="#00f6ff"/><stop offset="1" stop-color="#ff00e0"/></linearGradient>
             </defs>
-
-            <rect x="4" y="8" width="192" height="124" rx="10" fill="url(#g1)"/>
-            <rect x="12" y="26" width="54" height="72" rx="5" fill="#0b1220"/>
-            <text x="39" y="62" fill="#fff" font-size="7" text-anchor="middle" font-weight="700">MCU</text>
-
-            <!-- trace -->
-            <path id="traceSmall" d="M70 70 C 100 62, 130 62, 150 70" stroke="#06b6d4" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-            <circle id="electronSmall" r="3" class="electron" cx="70" cy="70" />
-
-            <!-- LED -->
-            <g transform="translate(154,70)">
-              <circle r="6" class="led-core"/>
-              <circle r="12" class="led-glow"/>
+            <rect x="0" y="0" width="800" height="220" fill="transparent" />
+            <g stroke="url(#lg)" stroke-width="3" fill="none" stroke-linecap="round">
+              <path class="wire" d="M40 110 H160 C180 110 180 70 200 70 H320 C340 70 340 110 360 110 H480 C500 110 500 150 520 150 H680"/>
+              <circle cx="200" cy="70" r="10" fill="#0ff" opacity="0.18"/>
+              <rect x="320" y="48" width="46" height="34" rx="6" fill="rgba(255,255,255,0.02)" stroke="url(#lg)"/>
+              <g transform="translate(520,150)">
+                <circle r="8" fill="rgba(255,0,224,0.12)" stroke="url(#lg)"/>
+              </g>
             </g>
+            <!-- moving glows -->
+            <circle cx="40" cy="110" r="4" fill="#00f6ff" opacity="0.9">
+              <animateMotion dur="4s" repeatCount="indefinite" path="M0 0 H640" />
+            </circle>
           </svg>
         </div>
-      </aside>
-    </section>
-
-    <!-- SKILLS -->
-    <section id="skills" class="mb-8" aria-labelledby="skills-heading">
-      <h2 style="font-size:20px;font-weight:800;margin:6px 0 12px">Skills</h2>
-      <div class="grid skills-grid">
-        <div class="skill-card">Embedded Systems</div>
-        <div class="skill-card">Networking</div>
-        <div class="skill-card">Arduino</div>
-        <div class="skill-card">Linux</div>
-        <div class="skill-card">Documentation</div>
-        <div class="skill-card">Troubleshooting</div>
-      </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section id="projects" class="mb-8" aria-labelledby="projects-heading">
-      <div style="display:flex;align-items:center;justify-content:space-between">
-        <h2 style="font-size:20px;font-weight:800;margin:6px 0">Featured Projects</h2>
-        <div class="muted" style="font-size:13px">Tap a card to see actions</div>
       </div>
 
-      <div class="grid projects-grid" style="margin-top:12px">
-        <article class="project">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start">
-            <div>
-              <div style="font-weight:800;font-size:16px">IoT Temperature Monitor</div>
-              <div class="muted" style="font-size:13px;margin-top:6px">ESP8266 based sensor with realtime dashboard and alerts.</div>
-            </div>
-            <div class="tags">
-              <span class="tag">Arduino</span><span class="tag">MQTT</span>
-            </div>
-          </div>
-          <div style="margin-top:auto;display:flex;gap:8px">
-            <button class="btn btn-primary" onclick="alert('Demo placeholder — add live demo link')">Live</button>
-            <button class="btn btn-ghost" onclick="alert('Code placeholder — add repo link')">Code</button>
-          </div>
-        </article>
+      <h2 class="section-title" id="hobbies">Hobbies</h2>
+      <ul>
+        <li>Surfing the internet</li>
+        <li>Learning new technologies</li>
+        <li>Working on DIY tech projects</li>
+        <li>Exploring IoT innovation</li>
+      </ul>
 
-        <article class="project">
-          <div>
-            <div style="font-weight:800;font-size:16px">Smart LED Controller</div>
-            <div class="muted" style="font-size:13px;margin-top:6px">Addressable LEDs controlled via web BLE and small mobile UI.</div>
-          </div>
-          <div style="margin-top:auto;display:flex;gap:8px">
-            <button class="btn btn-primary" onclick="alert('Demo placeholder')">Live</button>
-            <button class="btn btn-ghost" onclick="alert('Code placeholder')">Code</button>
-          </div>
-        </article>
-
-        <article class="project">
-          <div>
-            <div style="font-weight:800;font-size:16px">Network Troubleshoot Toolkit</div>
-            <div class="muted" style="font-size:13px;margin-top:6px">Scripts & hardware rigs for diagnosing LAN issues.</div>
-          </div>
-          <div style="margin-top:auto;display:flex;gap:8px">
-            <button class="btn btn-primary" onclick="alert('Demo placeholder')">Live</button>
-            <button class="btn btn-ghost" onclick="alert('Code placeholder')">Code</button>
-          </div>
-        </article>
+      <div style="display:flex;gap:12px;margin-top:16px;align-items:center">
+        <button class="resume-btn" onclick="openProtectedResume()">🔒 View Resume (protected)</button>
+        <a class="btn" href="#contact">Contact</a>
       </div>
+
     </section>
 
-    <!-- ELECTRONICS -->
-    <section id="electronics" class="electronics mb-8" aria-labelledby="electronics-heading">
-      <div class="circuit-wrap card">
-        <h3 style="font-weight:800;margin:0 0 8px">Animated Circuit</h3>
-        <p class="muted" style="margin:0 0 12px">Interactive SVG that animates a pulse from MCU to LED. Hover to slow animation (desktop).</p>
-
-        <div style="border-radius:10px;overflow:hidden;">
-          <svg id="bigSvg" viewBox="0 0 300 180" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Interactive circuit">
-            <defs>
-              <linearGradient id="pcbgrad" x1="0" x2="1">
-                <stop offset="0%" stop-color="#e6fffb"/>
-                <stop offset="100%" stop-color="#ffffff"/>
-              </linearGradient>
-            </defs>
-
-            <rect x="0" y="0" width="300" height="180" rx="12" fill="url(#pcbgrad)"/>
-            <rect x="36" y="56" width="60" height="68" rx="6" fill="#0b1220" opacity="0.95"/>
-            <text x="66" y="95" font-size="10" fill="#fff" text-anchor="middle">ESP</text>
-
-            <!-- Resistor zig-zag path -->
-            <path id="resistorPath" d="M110 80 l20 0 l10 -14 l20 14 l10 -14 l20 14 l20 0" stroke="#a3a3a3" stroke-width="3" fill="none" stroke-linecap="round"/>
-
-            <!-- big trace -->
-            <path id="bigTrace" d="M94 90 C 130 90, 190 90, 230 92" stroke="#06b6d4" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-
-            <!-- LED -->
-            <g transform="translate(250,90)">
-              <circle r="8" class="led-core"/>
-              <circle r="14" class="led-glow"/>
-            </g>
-
-            <!-- moving electron (particle) -->
-            <circle id="bigElectron" r="4" class="electron" cx="94" cy="90"></circle>
-          </svg>
+    <aside class="card">
+      <h2 class="section-title">Contact</h2>
+      <div class="contact-list" id="contact">
+        <div class="contact-item" id="contact-phone">
+          <div class="ci-left" aria-hidden="true">
+            <!-- phone svg -->
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 16.5v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.29 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.5 5.18 2 2 0 0 1 4.5 3h3a2 2 0 0 1 2 1.72c.12 1.2.36 2.36.7 3.45a2 2 0 0 1-.45 2.02L9.7 11.7c1.8 3.6 4.8 6.6 8.4 8.4l1.5-1.35a2 2 0 0 1 2.02-.45c1.09.34 2.25.58 3.45.7A2 2 0 0 1 21 16.5z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="ci-right">+91 6262591914</div>
         </div>
 
-        <div class="controls">
-          <button id="togglePulse" class="btn btn-primary">Toggle Pulse</button>
-          <button id="exportSchem" class="btn btn-ghost" onclick="alert('Export placeholder — add schematic export logic')">Export Schematic</button>
+        <div class="contact-item" id="contact-email">
+          <div class="ci-left" aria-hidden="true">
+            <!-- gmail icon only -->
+            <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M3 6.5v11A2.5 2.5 0 0 0 5.5 20h13a2.5 2.5 0 0 0 2.5-2.5v-11" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 6 L12 13 3 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          </div>
+          <div class="ci-right">imshahayan@gmail.com</div>
+        </div>
+
+        <div class="contact-item" id="contact-location">
+          <div class="ci-left" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </div>
+          <div class="ci-right">Bijbehara, Jammu &amp; Kashmir</div>
+        </div>
+
+        <div style="margin-top:6px">
+          <div class="section-title" style="margin-top:0">Social</div>
+          <div class="social-row" aria-label="Social links">
+            <a href="https://www.facebook.com/share/17a1q3Gcvs/" target="_blank" title="Facebook" aria-label="Facebook">
+              <!-- facebook svg -->
+              <svg viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg"><path d="M15 3h3v4h-3v14h-5V7H9V3h3V1.5C12 0.7 12.7 0 13.5 0h2C16.3 0 17 0.7 17 1.5V3z" fill="currentColor"/></svg>
+            </a>
+            <a href="https://www.instagram.com/ayanovaic?igsh=bHFqNnZ2b3BjdDh6" target="_blank" title="Instagram">
+              <svg viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" fill="none" stroke-width="1.2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.2" fill="none"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+            </a>
+            <a href="https://www.snapchat.com/add/ion.ayan?share_id=kSGHloIg3B0&locale=en-IN" target="_blank" title="Snapchat">
+              <svg viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg"><path d="M12 2c3.3 0 4.9 1.6 4.9 1.6 1.1.7 1.9 1.8 1.9 3.2 0 2.1-1.9 2.7-1.9 2.7-.4.2-.7.6-.7 1.1 0 .9.7 1.2 1.2 1.2.5 0 .9-.1 1.4-.3.3-.1.7 0 .9.3.1.1.2.4.1.6-.4 1.3-1.8 3.7-6.9 3.7S5.3 18 4.9 16.7c-.1-.2 0-.5.1-.6.2-.3.6-.4.9-.3.5.2.9.3 1.4.3.5 0 1.2-.3 1.2-1.2 0-.5-.3-.9-.7-1.1 0 0-1.9-.6-1.9-2.7 0-1.4.8-2.5 1.9-3.2C7.1 3.6 8.7 2 12 2z" fill="currentColor"/></svg>
+            </a>
+            <a href="https://x.com/PATRIOT_SPIRIT0" target="_blank" title="X / Twitter">
+              <svg viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg"><path d="M23 4.6c-.7.3-1.5.6-2.3.7.8-.5 1.4-1.3 1.7-2.3-.7.4-1.6.7-2.4.9A4.3 4.3 0 0 0 12 8a12.2 12.2 0 0 1-8.9-4.5 4.2 4.2 0 0 0-.6 2.1c0 1.5.8 2.8 2 3.5-.6 0-1.1-.2-1.6-.4 0 2 1.4 3.5 3.3 3.9-.5.1-1 .2-1.4.1.4 1.3 1.6 2.2 3.1 2.2A8.6 8.6 0 0 1 2 19.3 12.1 12.1 0 0 0 8.2 21c7.5 0 11.6-6.2 11.6-11.6v-.5c.8-.6 1.4-1.3 1.9-2.1z" fill="currentColor"/></svg>
+            </a>
+          </div>
         </div>
       </div>
 
-      <aside class="card">
-        <h4 style="font-weight:800;margin:0 0 8px">Component List</h4>
-        <ul style="margin:0;padding-left:18px;color:var(--muted)">
-          <li>ESP8266 / ATmega328P (MCU)</li>
-          <li>1kΩ Resistor</li>
-          <li>5mm LED</li>
-          <li>Jumper wires, breadboard</li>
-          <li>Power: 3.3V regulated</li>
-        </ul>
-        <div style="font-size:13px;margin-top:10px;color:var(--muted)">Tip: hover the circuit (desktop) to slow down animation for inspection.</div>
-      </aside>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="mb-8">
-      <div class="card">
-        <h3 style="font-weight:800;margin:0 0 8px">Contact</h3>
-        <p class="muted" style="margin:0 0 12px">Prefer Telegram? Put a short link here. Or use the form below.</p>
-
-        <form onsubmit="event.preventDefault(); alert('Form submit placeholder — connect to email/telegram via serverless function')">
-          <div style="display:grid;grid-template-columns:1fr;gap:12px">
-            <input name="name" placeholder="Your name" required />
-            <input name="email" placeholder="Email" type="email" required />
-            <textarea name="message" placeholder="Message" rows="5" required></textarea>
-            <div style="display:flex;gap:10px">
-              <button class="btn btn-primary" type="submit">Send</button>
-              <button class="btn btn-ghost" type="reset">Reset</button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </section>
-
-    <footer class="foot">© <span id="year"></span> Ayan — Built with ❤️ • Static HTML</footer>
+    </aside>
   </main>
 
+  <footer>
+    <small>Built with ❤️ — Ayan. Resume protected with a password.</small>
+  </footer>
+
   <script>
-    // set year
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // toggle sidebar menu
+    function toggleMenu(btn){
+      const m = document.getElementById('sideMenu');
+      if(m.style.display==='none' || m.style.display==='') m.style.display='block'; else m.style.display='none';
+    }
 
-    // Hamburger / menu toggle
-    const hamb = document.getElementById('hamb');
-    const hambBtn = document.getElementById('hambBtn');
-    const menu = document.getElementById('menu');
-    let menuOpen = false;
-
-    function setMenu(v){
-      menuOpen = v;
-      if(v){
-        hamb.classList.add('open');
-        menu.classList.add('open');
-        hambBtn.setAttribute('aria-expanded','true');
-        menu.setAttribute('aria-hidden','false');
+    // protected resume logic
+    function openProtectedResume(){
+      const pw = prompt('Enter password to open resume');
+      // password required by user: I LOVE YOU (case sensitive)
+      if(pw === null) return;
+      if(pw === 'I LOVE YOU'){
+        // attempt to open resume.pdf placed in same folder
+        window.open('resume.pdf', '_blank');
       } else {
-        hamb.classList.remove('open');
-        menu.classList.remove('open');
-        hambBtn.setAttribute('aria-expanded','false');
-        menu.setAttribute('aria-hidden','true');
+        alert('Incorrect password');
       }
     }
-    hambBtn.addEventListener('click', () => setMenu(!menuOpen));
-    // close menu when clicking an internal link
-    menu.querySelectorAll('a.menu-item').forEach(a => a.addEventListener('click', ()=> setMenu(false)));
 
-    // Theme / contrast toggle (simple)
-    const themeToggle = document.getElementById('themeToggle');
-    let highContrast = false;
-    themeToggle.addEventListener('click', () => {
-      highContrast = !highContrast;
-      if(highContrast){
-        document.documentElement.style.setProperty('--bg-1','linear-gradient(135deg,#020617 0%, #04132a 45%, #041922 100%)');
-        document.documentElement.style.setProperty('--muted','#cde8ff');
-        document.documentElement.style.setProperty('--card','rgba(255,255,255,0.06)');
-      } else {
-        document.documentElement.style.removeProperty('--bg-1');
-        document.documentElement.style.removeProperty('--muted');
-        document.documentElement.style.removeProperty('--card');
-      }
-    });
-
-    // ELECTRON ANIMATION: Moves a circle along a path using getPointAtLength
-    (function(){
-      const svg = document.getElementById('bigSvg');
-      const path = svg.querySelector('#bigTrace');
-      const electron = svg.querySelector('#bigElectron');
-      const toggle = document.getElementById('togglePulse');
-      let running = true;
-      let speed = 1.6; // higher = slower
-      let pos = 0;
-      let len = 0;
-
-      try {
-        len = path.getTotalLength();
-      } catch(e){
-        // fallback: hide electron if not supported
-        electron.style.display = 'none';
-        return;
-      }
-
-      function tick(){
-        if(running){
-          pos += (2.2 * (window.speedFactor || 1)); // global speed factor
-          if(pos > len) pos = 0;
-          const p = path.getPointAtLength(pos % len);
-          electron.setAttribute('cx', p.x);
-          electron.setAttribute('cy', p.y);
+    // small enhancement: smooth scrolling for nav links inside sideMenu
+    document.querySelectorAll('#sideMenu a, a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const href = a.getAttribute('href');
+        if(href && href.startsWith('#')){
+          const el = document.querySelector(href);
+          if(el) el.scrollIntoView({behavior:'smooth'});
         }
-        requestAnimationFrame(tick);
-      }
-      tick();
-
-      // pause/resume
-      toggle.addEventListener('click', () => {
-        running = !running;
-        toggle.textContent = running ? 'Toggle Pulse' : 'Pulse Paused';
+        if(document.getElementById('sideMenu')) document.getElementById('sideMenu').style.display='none';
       });
-
-      // slow on hover (desktop)
-      svg.addEventListener('mouseenter', () => { window.speedFactor = 0.35; });
-      svg.addEventListener('mouseleave', () => { window.speedFactor = 1; });
-
-      // small electron in hero svg (reuse similar logic)
-      const heroSvg = document.querySelector('svg[aria-label="Animated electronic mockup"]');
-      if(heroSvg){
-        const tpath = heroSvg.querySelector('#traceSmall');
-        const e = heroSvg.querySelector('#electronSmall');
-        try{
-          const plen = tpath.getTotalLength();
-          let ppos = 0;
-          (function htick(){
-            ppos += 2.4 * (window.speedFactor || 1);
-            if(ppos > plen) ppos = 0;
-            const pp = tpath.getPointAtLength(ppos % plen);
-            e.setAttribute('cx', pp.x);
-            e.setAttribute('cy', pp.y);
-            requestAnimationFrame(htick);
-          })();
-        } catch(err){}
-      }
-    })();
-
-    // Accessibility: close menu on escape
-    document.addEventListener('keydown', (e) => {
-      if(e.key === 'Escape') setMenu(false);
     });
 
-    // Respect reduced motion
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if(mq.matches){
-      document.querySelectorAll('.led-glow').forEach(el => el.style.animation = 'none');
-    }
+    // small parallax glow on mouse move
+    document.addEventListener('mousemove', (e)=>{
+      const x = (e.clientX / window.innerWidth - 0.5) * 40;
+      const y = (e.clientY / window.innerHeight - 0.5) * 40;
+      document.body.style.backgroundPosition = `${50 - x}% ${50 - y}% , ${50 + x}% ${50 + y}% , center`;
+    });
+
+    // accessibility: close menu with Escape
+    document.addEventListener('keydown',(e)=>{ if(e.key==='Escape'){ document.getElementById('sideMenu').style.display='none'; } });
   </script>
+
 </body>
 </html>
